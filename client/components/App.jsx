@@ -1,12 +1,12 @@
 import React from 'react'
 
 import Header from './Header'
-import AddWidget from './AddWidget'
-import WidgetList from './WidgetList'
-import WidgetDetails from './WidgetDetails'
-import ErrorMessage from './ErrorMessage'
+// import AddWidget from './AddWidget'
+// import WidgetList from './WidgetList'
+// import WidgetDetails from './WidgetDetails'
+// import ErrorMessage from './ErrorMessage'
 
-import { getWidgets } from '../api'
+// import { getWidgets } from '../api'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -14,7 +14,8 @@ export default class App extends React.Component {
 
     this.state = {
       isResident: null,
-      hasKiwiSaverAcc: null
+      hasKiwiSaverAcc: null,
+      hasKiwiSaverThreeYears: null,
     }
 
     this.residentQuestionOption = this.residentQuestionOption.bind(this)
@@ -78,6 +79,36 @@ export default class App extends React.Component {
     } 
   }
 
+  showKiwiSaverDurationQuestion() {
+    if ((this.state.isResident === true) &&
+        (this.state.hasKiwiSaverAcc === true) ) {
+
+      return (
+        <form className="container">
+          <h3>Do you have your Kiwi Saver Account for more than 3 years?</h3>
+            <div className="kiwiSaverDuration-check">
+              <label>
+                <input type="radio" value="true"
+                  checked={this.state.hasKiwiSaverThreeYears === true}
+                  onChange={ () => { this.kiwiSaverDurationOption(true) }}
+                />
+                &nbsp;Yes
+              </label>
+            </div>
+            <div className="kiwiSaverDuration-check">
+              <label>
+                <input type="radio" value="false"
+                  checked={this.state.hasKiwiSaverThreeYears === false}
+                  onChange={ () => { this.kiwiSaverDurationOption(false) }}
+                />
+                &nbsp;No
+              </label>
+            </div>
+          </form>
+      )
+    }
+  }
+
   residentQuestionOption(answer) {
     this.setState({
       isResident : answer
@@ -90,10 +121,16 @@ export default class App extends React.Component {
     })
   }
 
+  kiwiSaverDurationOption(answer) {
+    this.setState({
+      hasKiwiSaverThreeYears : answer
+    })
+  }
+
   errorNeedResident() {
     if (this.state.isResident === false) {
       return (
-        <div className="container">You need to be a NZ Resident to be eligible</div>
+        <div className="container text-white bg-danger">You need to be a NZ Resident to be eligible</div>
       )
     }
   }
@@ -105,7 +142,20 @@ export default class App extends React.Component {
 
     if (this.state.hasKiwiSaverAcc === false) {
       return (
-        <div className="container">You need to have a Kiwi Saver Account to be eligible</div>
+        <div className="container text-white bg-danger">You need to have a Kiwi Saver Account to be eligible</div>
+      )
+    }
+  }
+
+  errorNeedThreeYearsKiwiSaver() {
+    if (this.state.isResident != true ||
+        this.state.hasKiwiSaverAcc != true) {
+      return
+    }
+
+    if (this.state.hasKiwiSaverThreeYears === false) {
+      return (
+        <div className="container text-white bg-danger">You need to own a Kiwi Saver Account for more than 3 years to be eligible</div>
       )
     }
   }
@@ -121,6 +171,8 @@ export default class App extends React.Component {
         { this.errorNeedResident() }
         { this.showKiwiSaverAccQuestion() }
         { this.errorNeedKiwiSaverAccount() }
+        { this.showKiwiSaverDurationQuestion() }
+        { this.errorNeedThreeYearsKiwiSaver() }
 
       </div>
     )
