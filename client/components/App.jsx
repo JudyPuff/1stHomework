@@ -13,101 +13,115 @@ export default class App extends React.Component {
     super(props)
 
     this.state = {
-      isResident: false,
-      // error: null,
-      // widgets: [],
-      // activeWidget: null,
-      // detailsVisible: false,
-      // addWidgetVisible: false
+      isResident: null,
+      hasKiwiSaverAcc: null
     }
 
-    // this.refreshList = this.refreshList.bind(this)
-    // this.showDetails = this.showDetails.bind(this)
-    // this.hideDetails = this.hideDetails.bind(this)
-    // this.renderWidgets = this.renderWidgets.bind(this)
-    // this.showAddWidget = this.showAddWidget.bind(this)
+    this.residentQuestionOption = this.residentQuestionOption.bind(this)
   }
 
-  componentDidMount() {
-    //this.refreshList()
+  // componentDidMount() {
+
+  // }
+
+  showResidentQuestion() {
+    return (
+      <form className="container">
+        <h3>Are you a New Zealand citizen or resident?</h3>
+          <div className="resident-check">
+            <label>
+              <input type="radio" value="true" 
+                checked={this.state.isResident === true}
+                onChange={ () => { this.residentQuestionOption(true) }}         
+              />
+              &nbsp;Yes
+            </label>
+          </div>
+          <div className="resident-check">
+            <label>
+              <input type="radio" value="false" 
+                checked={this.state.isResident === false}
+                onChange={ () => { this.residentQuestionOption(false) }}         
+              />
+              &nbsp;No
+            </label>
+          </div>
+        </form>
+    )
   }
 
-  // renderWidgets(err, widgets) {
-  //   this.setState({
-  //     error: err,
-  //     widgets: widgets || []
-  //   })
-  // }
+  showKiwiSaverAccQuestion() {
+    if (this.state.isResident === true) {
+      return (
+        <form className="container">
+          <h3>Do you have a Kiwi Saver Account?</h3>
+            <div className="kiwiSaverAcc-check">
+              <label>
+                <input type="radio" value="true" 
+                  checked={this.state.hasKiwiSaverAcc === true}
+                  onChange={ () => { this.kiwiSaverAccountOption(true) }}         
+                />
+                &nbsp;Yes
+              </label>
+            </div>
+            <div className="kiwiSaverAcc-check">
+              <label>
+                <input type="radio" value="false" 
+                  checked={this.state.hasKiwiSaverAcc === false}
+                  onChange={ () => { this.kiwiSaverAccountOption(false) }}         
+                />
+                &nbsp;No
+              </label>
+            </div>
+          </form>
+      )
+    } 
+  }
 
-  // refreshList(err) {
-  //   this.setState({
-  //     error: err,
-  //     addWidgetVisible: false
-  //   })
-  //   getWidgets(this.renderWidgets)
-  // }
+  residentQuestionOption(answer) {
+    this.setState({
+      isResident : answer
+    })
+  }
 
-  // showAddWidget() {
-  //   this.setState({
-  //     addWidgetVisible: true
-  //   })
-  // }
+  kiwiSaverAccountOption(answer) {
+    this.setState({
+      hasKiwiSaverAcc : answer
+    })
+  }
 
-  // showDetails(widget) {
-  //   this.setState({
-  //     activeWidget: widget,
-  //     detailsVisible: true
-  //   })
-  // }
+  errorNeedResident() {
+    if (this.state.isResident === false) {
+      return (
+        <div className="container">You need to be a NZ Resident to be eligible</div>
+      )
+    }
+  }
 
-  // hideDetails() {
-  //   this.setState({
-  //     detailsVisible: false
-  //   })
-  // }
+  errorNeedKiwiSaverAccount() {
+    if (this.state.isResident != true) {
+      return
+    }
+
+    if (this.state.hasKiwiSaverAcc === false) {
+      return (
+        <div className="container">You need to have a Kiwi Saver Account to be eligible</div>
+      )
+    }
+  }
 
   render() {
+    console.log("rendering...")
+
     return (
       <div>
         <Header />
 
-        <form className="container">
-          <h3>Are you a New Zealand citizen or resident?</h3>
-          <div className="form-check">
-            <label>
-              <input type="radio" name="applicant.isNZResident-group" /> <span className="label-text" value="true">Yes</span>
-            </label>
-          </div>
-          <div className="form-check">
-            <label>
-              <input type="radio" name="applicant.isNZResident-group" /> <span className="label-text" value="false">No</span>
-            </label>
-          </div>
-        </form>
+        { this.showResidentQuestion() }  
+        { this.errorNeedResident() }
+        { this.showKiwiSaverAccQuestion() }
+        { this.errorNeedKiwiSaverAccount() }
 
-
-
-
-
-
-        {/* <h1>Widgets FTW!</h1>
-
-        <WidgetList
-          showDetails={this.showDetails}
-          widgets={this.state.widgets} />
-
-        <p>
-          <a id='show-widget-link' href='#'
-            onClick={this.showAddWidget}>Add widget</a>
-        </p>
-
-        {this.state.addWidgetVisible && <AddWidget
-          finishAdd={this.refreshList} />}
-
-        {this.state.detailsVisible && <WidgetDetails
-          isVisible={this.state.detailsVisible}
-          hideDetails={this.hideDetails}
-          widget={this.state.activeWidget} />} */}
       </div>
     )
   }
