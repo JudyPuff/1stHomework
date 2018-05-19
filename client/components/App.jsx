@@ -29,7 +29,9 @@ export default class App extends React.Component {
   showResidentQuestion() {
     return (
       <QuestionYesNo question="Are you a New Zealand citizen or resident?"
-        questionNum="1" stateValue={this.state.isResident} callback={ (answer) => { this.residentQuestionOption(answer) } }
+        questionNum="1" stateValue={this.state.isResident} callback={ (answer) => { 
+          this.setState({isResident : answer})
+        }}
       />
     )
   }
@@ -90,12 +92,6 @@ export default class App extends React.Component {
           </form>
       )
     }
-  }
-
-  residentQuestionOption(answer) {
-    this.setState({
-      isResident : answer
-    })
   }
 
   kiwiSaverAccountOption(answer) {
