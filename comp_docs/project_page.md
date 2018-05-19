@@ -2,12 +2,20 @@
 
 ## Team members
 
-* Judy Ting-Edwards -
-* Brian Ho -
+* Judy Ting-Edwards - judy@tingedwards.com
+* Brian Ho - brian2ho@gmail.com
 * Hayden Malan - haydenmalan1@gmail.com
 * Steven Brown - sgbrown@mac.com
 
 ## Project details
+
+### Problem statement
+
+Prospective home-buyers find it difficult to determine whether they are eligible for Government assistance, particularly whether they are eligible for the KiwiSaver HomeStart grant, given changing Loan to Value Ratio restrictions imposed by the Reserve Bank.
+
+### Solution outline
+
+Rules from KiwiSaver legislation and Reserve Bank banking supervision handbook, made available through OpenFisca API to a React front-end.
 
 ### Digitised rules used
 
