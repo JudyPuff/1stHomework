@@ -3,6 +3,7 @@ import React from 'react'
 import Header from './Header'
 import QuestionYesNo from './QuestionYesNo'
 import IneligibleMessage from './IneligibleMessage'
+import RadioChoice from './RadioChoice'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -14,7 +15,8 @@ export default class App extends React.Component {
       ownedHouse: null,
       intendToLive: null,
       hasKiwiSaverThreeYears: null,
-      contributeThreeYears: null
+      contributeThreeYears: null,
+      buyingLocation: 0
     }
   }
 
@@ -115,6 +117,52 @@ export default class App extends React.Component {
     )
   }
 
+  showHouseLocationQuestion() {
+    if (!this.state.isResident ||
+      !this.state.hasKiwiSaverAcc ||
+      (this.state.ownedHouse !== false) ||
+       !this.state.intendToLive ||
+       !this.state.hasKiwiSaverThreeYears ||
+       !this.state.contributeThreeYears) return
+
+      const questionNum = 7
+      const questionIdentifier = "question-" + questionNum
+      const location1 = "Auckland"
+      const location2 = "Hamilton / Tauranga / Western Bay of Plenty / Kapiti Coast / Porirua / Uper Hutt / Hutt City / Wellington / Tasma / Nelson / Waimakariri / Christchurch / Selwyn / Queenstown Lakes"
+      const location3 = "Others"
+      const stateValue = this.state.buyingLocation
+
+      return (
+        <form className="container mt-4">
+          <h4>{questionNum}. Where do you intend to buy your house</h4>
+            <RadioChoice identifier={questionIdentifier} radioValue={1}
+              radioValueStr="1" stateValue={stateValue}
+              label={location1}
+              callback={
+                (answer) => {
+                  this.setState({buyingLocation : answer})
+                }
+              } />
+            <RadioChoice identifier={questionIdentifier} radioValue={2}
+              radioValueStr="2" stateValue={stateValue}
+              label={location2}
+              callback={
+                (answer) => {
+                  this.setState({buyingLocation : answer})
+                }
+              }/>
+            <RadioChoice identifier={questionIdentifier} radioValue={3}
+              radioValueStr="3" stateValue={stateValue}
+              label={location3}
+              callback={
+                (answer) => {
+                  this.setState({buyingLocation : answer})
+                }
+              }/>
+          </form>
+      )
+  }
+
   msgNeedResident() {
     if (this.state.isResident === false) {
       return (
@@ -205,6 +253,7 @@ export default class App extends React.Component {
         { this.msgNeedThreeYearsKiwiSaver() }
         { this.showKiwiSaverContributeQuestion() }
         { this.msgNeedContributeThreeYears() }
+        { this.showHouseLocationQuestion() }
 
       </div>
     )

@@ -2,7 +2,7 @@ import React from 'react'
 import RadioChoice from './RadioChoice'
 
 export default function QuestionYesNo(props) {
-    let questionIdentifier = "question-" + props.questionNum
+    const questionIdentifier = "question-" + props.questionNum
 
     return (
         <form className="container mt-4">
