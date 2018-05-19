@@ -42,3 +42,8 @@ Rules from KiwiSaver legislation and Reserve Bank banking supervision handbook, 
 
 ## Setup
 
+- fork or clone the repo
+- make sure you are in the 1stHomework directory
+- make sure you have Yarn installed
+- run: yarn install
+- run: yarn start
