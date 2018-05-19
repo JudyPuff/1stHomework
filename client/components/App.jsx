@@ -12,6 +12,7 @@ export default class App extends React.Component {
       isResident: null,
       hasKiwiSaverAcc: null,
       ownedHouse: null,
+      intendToLive: null,
       hasKiwiSaverThreeYears: null,
     }
   }
@@ -61,13 +62,31 @@ export default class App extends React.Component {
     )
   }
 
+  showIntendToLiveQuestion() {
+    if (!this.state.isResident ||
+      !this.state.hasKiwiSaverAcc ||
+      (this.state.ownedHouse !== false) ) return
+
+      return (
+        <QuestionYesNo question="Do you intend to live in the house?"
+          questionNum="4" stateValue={this.state.intendToLive}
+          callback={
+            (answer) => {
+              this.setState({intendToLive : answer})
+            }
+          }
+        />
+      )
+  }
+
   showKiwiSaverDurationQuestion() {
     if (!this.state.isResident ||
         !this.state.hasKiwiSaverAcc ||
-        (this.state.ownedHouse !== false) ) return
+        (this.state.ownedHouse !== false) ||
+        !this.state.intendToLive ) return
 
     return (
-      <QuestionYesNo question="Do you have your Kiwi Saver Account for more than 3 years?" questionNum="4" stateValue={this.state.hasKiwiSaverThreeYears}
+      <QuestionYesNo question="Have you had your Kiwi Saver Account for more than three years?" questionNum="5" stateValue={this.state.hasKiwiSaverThreeYears}
         callback={
           (answer) => {
             this.setState({hasKiwiSaverThreeYears : answer})
@@ -107,9 +126,23 @@ export default class App extends React.Component {
     }
   }
 
-  msgNeedThreeYearsKiwiSaver() {
+  msgMustIntendToLive() {
     if (!this.state.isResident || !this.state.hasKiwiSaverAcc || 
         this.state.ownedHouse === true) {
+      return
+    }
+
+    if (this.state.intendToLive === false) {
+      return (
+        <IneligibleMessage message="You must intend to live at the house. May eligible for exemption" isWarning={true} />
+      )
+    }
+
+  }
+
+  msgNeedThreeYearsKiwiSaver() {
+    if (!this.state.isResident || !this.state.hasKiwiSaverAcc || 
+        (this.state.ownedHouse === true) || !this.state.intendToLive) {
       return
     }
 
@@ -133,6 +166,8 @@ export default class App extends React.Component {
         { this.msgNeedKiwiSaverAccount() }
         { this.showOwnedHouseQuestion() }
         { this.msgCannotOwnedHouse() }
+        { this.showIntendToLiveQuestion() }
+        { this.msgMustIntendToLive() }
         { this.showKiwiSaverDurationQuestion() }
         { this.msgNeedThreeYearsKiwiSaver() }
 
