@@ -1,1 +1,4 @@
-The lessons learned from your experience in trying to build digital rules for your project, including any standards, tools or technologies used.
+- openFisca
+-- calculations on openFisca
+- the legislative authority for Reserve Bank policy instruments
+- something about checking in regularly, being able to pivot, and listening to mentors
