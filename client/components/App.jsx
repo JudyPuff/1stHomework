@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Header from './Header'
 import AddWidget from './AddWidget'
 import WidgetList from './WidgetList'
 import WidgetDetails from './WidgetDetails'
@@ -67,6 +68,7 @@ export default class App extends React.Component {
   render () {
     return (
       <div>
+        <Header />
         <ErrorMessage error={this.state.error} />
 
         <h1>Widgets FTW!</h1>
