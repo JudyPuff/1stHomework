@@ -5,7 +5,7 @@ export default function QuestionYesNo(props) {
 
     return (
         <form className="container mt-4">
-          <h3>{props.questionNum}. {props.question}</h3>
+          <h4>{props.questionNum}. {props.question}</h4>
             <div className={questionIdentifier}>
               <label>
                 <input type="radio" value="true" 

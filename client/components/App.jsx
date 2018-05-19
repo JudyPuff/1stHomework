@@ -104,15 +104,15 @@ export default class App extends React.Component {
       !this.state.intendToLive ||
       !this.state.hasKiwiSaverThreeYears ) return
 
-  return (
-    <QuestionYesNo question="Have you contributed to your Kiwi Saver account for more than three years?" questionNum="6" stateValue={this.state.contributeThreeYears}
-      callback={
-        (answer) => {
-          this.setState({contributeThreeYears : answer})
+    return (
+      <QuestionYesNo question="Have you contributed to your Kiwi Saver account for more than three years?" questionNum="6" stateValue={this.state.contributeThreeYears}
+        callback={
+          (answer) => {
+            this.setState({contributeThreeYears : answer})
+          }
         }
-      }
-    />
-  )
+      />
+    )
   }
 
   msgNeedResident() {
