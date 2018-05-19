@@ -1,0 +1,44 @@
+{
+  "name": "react-to-web-api",
+  "version": "0.2.1",
+  "description": "A React demo with web APIs",
+  "repository": "https://github.com/dev-academy-challenges/react-to-web-api.git",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "nodemon --watch server & webpack --watch",
+    "dev-client": "webpack-dev-server --hot --inline --content-base public",
+    "dev-server": "nodemon --watch server",
+    "test": "jest --watchAll",
+    "start": "node server"
+  },
+  "babel": {
+    "presets": [
+      "env",
+      "react"
+    ]
+  },
+  "author": "EDA",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "jest": "^22.1.4",
+    "jsdom": "^11.6.2",
+    "nodemon": "^1.14.12",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "supertest": "^3.0.0",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.11.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "superagent": "^3.8.2"
+  }
+}
