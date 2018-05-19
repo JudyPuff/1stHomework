@@ -36,10 +36,9 @@ As prospective home-buyers, we find it difficult to determine whether we are eli
 
 ## Solution overview
 
-
+Rules from KiwiSaver legislation and Reserve Bank banking supervision handbook, made available through OpenFisca API to a React front-end.
 
  ---
-
 
 ## Setup
 
