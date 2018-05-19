@@ -2,19 +2,20 @@
 
 ## Team members
 
-* Judy
-* Brian
-* Hayden
-* Steven
+* Judy Ting-Edwards -
+* Brian Ho -
+* Hayden Malan - haydenmalan1@gmail.com
+* Steven Brown - sgbrown@mac.com
 
 ## Project details
 
 ### Digitised rules used
 
-* - from Kiwisaver Act 2006
-* - from Reserve Bank document BS19, issued under s68 of Reserve Bank Act YYYY
+* - rules concerning eligibility for a HomeStart grant, from s8 of Schedule 1 of the Kiwisaver Act 2006
+* - from Reserve Bank document BS19-Framework-for-LVR-restrictions-Oct2016, issued under s68 of the Reserve Bank Act 1989
 
 ### Links to project video and source code
 
 * - link to YouTube
-* - link to Github
+* - [1stHomework at Github](https://github.com/JudyPuff/1stHomework)
+
