@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Header from './Header'
+import QuestionYesNo from './QuestionYesNo'
 // import AddWidget from './AddWidget'
 // import WidgetList from './WidgetList'
 // import WidgetDetails from './WidgetDetails'
@@ -27,27 +28,9 @@ export default class App extends React.Component {
 
   showResidentQuestion() {
     return (
-      <form className="container">
-        <h3>Are you a New Zealand citizen or resident?</h3>
-          <div className="resident-check">
-            <label>
-              <input type="radio" value="true" 
-                checked={this.state.isResident === true}
-                onChange={ () => { this.residentQuestionOption(true) }}         
-              />
-              &nbsp;Yes
-            </label>
-          </div>
-          <div className="resident-check">
-            <label>
-              <input type="radio" value="false" 
-                checked={this.state.isResident === false}
-                onChange={ () => { this.residentQuestionOption(false) }}         
-              />
-              &nbsp;No
-            </label>
-          </div>
-        </form>
+      <QuestionYesNo question="Are you a New Zealand citizen or resident?"
+        questionNum="1" stateValue={this.state.isResident} callback={ (answer) => { this.residentQuestionOption(answer) } }
+      />
     )
   }
 
