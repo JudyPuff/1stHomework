@@ -10,7 +10,7 @@ As prospective home-buyers, we find it difficult to determine whether we are eli
 * Enjoyment in process over product
 * Respect and prioritise learning objectives
 
-## User Stories
+## Scenario examples
 
 ### Scenario 1
 * We are a couple with combined income of $95,000 (50K + 45K) p.a.
