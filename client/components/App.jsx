@@ -2,12 +2,7 @@ import React from 'react'
 
 import Header from './Header'
 import QuestionYesNo from './QuestionYesNo'
-// import AddWidget from './AddWidget'
-// import WidgetList from './WidgetList'
-// import WidgetDetails from './WidgetDetails'
-// import ErrorMessage from './ErrorMessage'
-
-// import { getWidgets } from '../api'
+import IneligibleMessage from './IneligibleMessage'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -16,10 +11,9 @@ export default class App extends React.Component {
     this.state = {
       isResident: null,
       hasKiwiSaverAcc: null,
+      ownedHouse: null,
       hasKiwiSaverThreeYears: null,
     }
-
-    this.residentQuestionOption = this.residentQuestionOption.bind(this)
   }
 
   // componentDidMount() {
@@ -29,129 +23,118 @@ export default class App extends React.Component {
   showResidentQuestion() {
     return (
       <QuestionYesNo question="Are you a New Zealand citizen or resident?"
-        questionNum="1" stateValue={this.state.isResident} callback={ (answer) => { 
-          this.setState({isResident : answer})
-        }}
+        questionNum="1" stateValue={this.state.isResident} callback={ 
+          (answer) => { 
+            this.setState({isResident : answer})
+          }
+        }
       />
     )
   }
 
   showKiwiSaverAccQuestion() {
-    if (this.state.isResident === true) {
-      return (
-        <form className="container">
-          <h3>Do you have a Kiwi Saver Account?</h3>
-            <div className="kiwiSaverAcc-check">
-              <label>
-                <input type="radio" value="true" 
-                  checked={this.state.hasKiwiSaverAcc === true}
-                  onChange={ () => { this.kiwiSaverAccountOption(true) }}         
-                />
-                &nbsp;Yes
-              </label>
-            </div>
-            <div className="kiwiSaverAcc-check">
-              <label>
-                <input type="radio" value="false" 
-                  checked={this.state.hasKiwiSaverAcc === false}
-                  onChange={ () => { this.kiwiSaverAccountOption(false) }}         
-                />
-                &nbsp;No
-              </label>
-            </div>
-          </form>
-      )
-    } 
+    if (this.state.isResident !== true) return
+
+    return (
+      <QuestionYesNo question="Do you have a Kiwi Saver Account?"
+        questionNum="2" stateValue={this.state.hasKiwiSaverAcc} callback={
+          (answer) => {
+            this.setState({hasKiwiSaverAcc : answer})
+          }
+        }
+      />
+    ) 
+  }
+
+  showOwnedHouseQuestion() {
+    if (!this.state.isResident ||
+        !this.state.hasKiwiSaverAcc ) return
+
+    return (
+      <QuestionYesNo question="Do you owned a house before?"
+        questionNum="3" stateValue={this.state.ownedHouse} callback={ 
+          (answer) => { 
+            this.setState({ownedHouse : answer})
+          }
+        }
+      />
+    )
   }
 
   showKiwiSaverDurationQuestion() {
-    if ((this.state.isResident === true) &&
-        (this.state.hasKiwiSaverAcc === true) ) {
+    if (!this.state.isResident ||
+        !this.state.hasKiwiSaverAcc ||
+        (this.state.ownedHouse !== false) ) return
 
-      return (
-        <form className="container">
-          <h3>Do you have your Kiwi Saver Account for more than 3 years?</h3>
-            <div className="kiwiSaverDuration-check">
-              <label>
-                <input type="radio" value="true"
-                  checked={this.state.hasKiwiSaverThreeYears === true}
-                  onChange={ () => { this.kiwiSaverDurationOption(true) }}
-                />
-                &nbsp;Yes
-              </label>
-            </div>
-            <div className="kiwiSaverDuration-check">
-              <label>
-                <input type="radio" value="false"
-                  checked={this.state.hasKiwiSaverThreeYears === false}
-                  onChange={ () => { this.kiwiSaverDurationOption(false) }}
-                />
-                &nbsp;No
-              </label>
-            </div>
-          </form>
-      )
-    }
+    return (
+      <QuestionYesNo question="Do you have your Kiwi Saver Account for more than 3 years?" questionNum="4" stateValue={this.state.hasKiwiSaverThreeYears}
+        callback={
+          (answer) => {
+            this.setState({hasKiwiSaverThreeYears : answer})
+          }
+        }
+      />
+    )
   }
 
-  kiwiSaverAccountOption(answer) {
-    this.setState({
-      hasKiwiSaverAcc : answer
-    })
-  }
-
-  kiwiSaverDurationOption(answer) {
-    this.setState({
-      hasKiwiSaverThreeYears : answer
-    })
-  }
-
-  errorNeedResident() {
+  msgNeedResident() {
     if (this.state.isResident === false) {
       return (
-        <div className="container text-white bg-danger">You need to be a NZ Resident to be eligible</div>
+        <IneligibleMessage message="You need to be a NZ Resident to be eligible" />
       )
     }
   }
 
-  errorNeedKiwiSaverAccount() {
-    if (this.state.isResident != true) {
+  msgNeedKiwiSaverAccount() {
+    if (!this.state.isResident) return
+    
+    if (this.state.hasKiwiSaverAcc === false) {
+      return (
+        <IneligibleMessage message="You need to have a Kiwi Saver Account to be eligible" />
+      )
+    }
+  }
+
+  msgCannotOwnedHouse() {
+    if (!this.state.isResident || !this.state.hasKiwiSaverAcc) {
       return
     }
 
-    if (this.state.hasKiwiSaverAcc === false) {
+    if (this.state.ownedHouse === true) {
       return (
-        <div className="container text-white bg-danger">You need to have a Kiwi Saver Account to be eligible</div>
+        <IneligibleMessage message="You must not have owned a house before to be eligible" />
       )
     }
   }
 
-  errorNeedThreeYearsKiwiSaver() {
-    if (this.state.isResident != true ||
-        this.state.hasKiwiSaverAcc != true) {
+  msgNeedThreeYearsKiwiSaver() {
+    if (!this.state.isResident || !this.state.hasKiwiSaverAcc || 
+        this.state.ownedHouse === true) {
       return
     }
 
     if (this.state.hasKiwiSaverThreeYears === false) {
       return (
-        <div className="container text-white bg-danger">You need to own a Kiwi Saver Account for more than 3 years to be eligible</div>
+        <IneligibleMessage message="You need to own a Kiwi Saver Account for more than 3 years to be eligible" />
       )
     }
   }
 
-  render() {
-    console.log("rendering...")
+  
 
+  render() {
     return (
       <div>
         <Header />
 
         { this.showResidentQuestion() }  
-        { this.errorNeedResident() }
+        { this.msgNeedResident() }
         { this.showKiwiSaverAccQuestion() }
-        { this.errorNeedKiwiSaverAccount() }
+        { this.msgNeedKiwiSaverAccount() }
+        { this.showOwnedHouseQuestion() }
+        { this.msgCannotOwnedHouse() }
         { this.showKiwiSaverDurationQuestion() }
-        { this.errorNeedThreeYearsKiwiSaver() }
+        { this.msgNeedThreeYearsKiwiSaver() }
 
       </div>
     )
