@@ -4,7 +4,7 @@ export default function QuestionYesNo(props) {
     let questionIdentifier = "question-" + props.questionNum
 
     return (
-        <form className="container">
+        <form className="container mb-4">
           <h3>{props.questionNum}. {props.question}</h3>
             <div className={questionIdentifier}>
               <label>

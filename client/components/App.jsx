@@ -14,6 +14,7 @@ export default class App extends React.Component {
       ownedHouse: null,
       intendToLive: null,
       hasKiwiSaverThreeYears: null,
+      contributeThreeYears: null
     }
   }
 
@@ -96,6 +97,24 @@ export default class App extends React.Component {
     )
   }
 
+  showKiwiSaverContributeQuestion() {
+    if (!this.state.isResident ||
+      !this.state.hasKiwiSaverAcc ||
+      (this.state.ownedHouse !== false) ||
+      !this.state.intendToLive ||
+      !this.state.hasKiwiSaverThreeYears ) return
+
+  return (
+    <QuestionYesNo question="Have you contributed to your Kiwi Saver account for more than three years?" questionNum="6" stateValue={this.state.contributeThreeYears}
+      callback={
+        (answer) => {
+          this.setState({contributeThreeYears : answer})
+        }
+      }
+    />
+  )
+  }
+
   msgNeedResident() {
     if (this.state.isResident === false) {
       return (
@@ -134,7 +153,7 @@ export default class App extends React.Component {
 
     if (this.state.intendToLive === false) {
       return (
-        <IneligibleMessage message="You must intend to live at the house. May eligible for exemption" isWarning={true} />
+        <IneligibleMessage message="You must be intended to live at the house. May eligible for exemption" isWarning={true} />
       )
     }
 
@@ -149,6 +168,20 @@ export default class App extends React.Component {
     if (this.state.hasKiwiSaverThreeYears === false) {
       return (
         <IneligibleMessage message="You need to own a Kiwi Saver Account for more than 3 years to be eligible" />
+      )
+    }
+  }
+
+  msgNeedContributeThreeYears() {
+    if (!this.state.isResident || !this.state.hasKiwiSaverAcc || 
+      (this.state.ownedHouse === true) || !this.state.intendToLive ||
+      !this.state.hasKiwiSaverThreeYears) {
+    return
+    }
+
+    if (this.state.contributeThreeYears === false) {
+      return (
+        <IneligibleMessage message="You are not eligible for Home Start Grant. But you are still eligible for Kiwi Saver withdrawal. Please contact your Kiwi Saver provider today." isWarning={true} />
       )
     }
   }
@@ -170,6 +203,8 @@ export default class App extends React.Component {
         { this.msgMustIntendToLive() }
         { this.showKiwiSaverDurationQuestion() }
         { this.msgNeedThreeYearsKiwiSaver() }
+        { this.showKiwiSaverContributeQuestion() }
+        { this.msgNeedContributeThreeYears() }
 
       </div>
     )
