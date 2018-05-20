@@ -20,7 +20,7 @@ Rules from KiwiSaver legislation and Reserve Bank banking supervision handbook, 
 ### Digitised rules used
 
 * - rules concerning eligibility for a HomeStart grant, from s8 of Schedule 1 of the Kiwisaver Act 2006
-* - from Reserve Bank document BS19-Framework-for-LVR-restrictions-Oct2016, issued under s68 of the Reserve Bank Act 1989
+* - Loan-to-Value-Ratio eligibility for major banks set by the Reserve Bank document BS19-Framework-for-LVR-restrictions-Oct2016, issued under s68 of the Reserve Bank Act 1989
 
 ### Links to project video and source code
 
