@@ -65,7 +65,7 @@ export default class App extends React.Component {
         !this.state.hasKiwiSaverAcc ) return
 
     return (
-      <QuestionYesNo question="Do you owned a house before?"
+      <QuestionYesNo question="Have you owned a house before?"
         questionNum="3" stateValue={this.state.ownedHouse} callback={ 
           (answer) => { 
             this.setState({ownedHouse : answer})
@@ -210,7 +210,6 @@ export default class App extends React.Component {
             if (this.state.housePrice >= this.state.housePriceLimit) {
               isOverLimit = true
             }
-            console.log("isOverLimit? ", isOverLimit)
             this.setState({isPriceOverLimit : isOverLimit})
           }
         }
@@ -372,6 +371,20 @@ export default class App extends React.Component {
     }
   }
   
+  msgCombinedIncomeTooHigh() {
+    if (!this.state.isResident || !this.state.hasKiwiSaverAcc || 
+      (this.state.ownedHouse === true) || !this.state.intendToLive ||
+      !this.state.hasKiwiSaverThreeYears || !this.state.contributeThreeYears ||
+      this.state.isBuyingAsIndividual !== false) {
+      return
+    }
+
+    if (this.state.isIncomeBelowCombinedLimit === false) {
+      return (
+        <IneligibleMessage message="Your combined household income is over the threshold for more than one buyer " />
+      )
+    }
+  }
 
   render() {
     return (
@@ -396,7 +409,7 @@ export default class App extends React.Component {
         { this.showWhoBuyingQuestion() }
         { this.showSingleIncomeQuestion() }
         { this.showCombinedIncomeQuestion() }
-
+        { this.msgCombinedIncomeTooHigh() }
       </div>
     )
   }
