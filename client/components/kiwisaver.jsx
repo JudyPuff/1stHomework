@@ -22,7 +22,7 @@ export function isEligible(isCitizenOrPR, ownedHomeBefore, hasKiwiSaver, kiwiSav
   }
 
   //If the user is not a citizen or permanent resident they are not eligible.
-  if (citizenEligibility(isCitizenOrPR)) {
+  if (!citizenEligibility(isCitizenOrPR)) {
     return false;
   }
 
