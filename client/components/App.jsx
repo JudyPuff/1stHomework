@@ -18,7 +18,9 @@ export default class App extends React.Component {
       hasKiwiSaverThreeYears: null,
       numYearsHasKiwiSaver: 0,
       contributeThreeYears: null,
-      buyingLocation: 0
+      buyingLocation: 0,
+      housePrice: 0,
+      isPriceOverLimit: null
     }
   }
 
@@ -92,10 +94,10 @@ export default class App extends React.Component {
 
     return (
       <QuestionValue question="How many years have you had your Kiwi Saver account?"
-        questionNum="5"
+        questionNum="5" postLabel="year(s)"
         callbackUpdate={
           (value) => {
-            this.state.numYearsHasKiwiSaver = value
+            this.state.numYearsHasKiwiSaver = Number(value)
           }
 
         }
@@ -105,7 +107,6 @@ export default class App extends React.Component {
             if (this.state.numYearsHasKiwiSaver >= 3) {
               isMoreThanThreeYears = true
             }
-            console.log("showKiwiSaverDurationQuestion callback")
             this.setState({hasKiwiSaverThreeYears : isMoreThanThreeYears})
           }
         }
@@ -177,6 +178,37 @@ export default class App extends React.Component {
       )
   }
 
+  showHousePriceQuestion() {
+    if (!this.state.isResident ||
+       !this.state.hasKiwiSaverAcc ||
+       (this.state.ownedHouse !== false) ||
+       !this.state.intendToLive ||
+       !this.state.hasKiwiSaverThreeYears ||
+       !this.state.contributeThreeYears ||
+       (this.state.buyingLocation <= 0)
+      ) return
+
+    return (
+      <QuestionValue question="How much is the house you want to buy?"
+        questionNum="8" preLabel="$"
+        callbackUpdate={
+          (value) => {
+            this.state.housePrice = Number(value)
+          }
+        }
+        callback={
+          () => {
+            let isOverLimit = false
+            if (this.state.housePrice >= 500000) {
+              isOverLimit = true
+            }
+            this.setState({isPriceOverLimit : isOverLimit})
+          }
+        }
+      />
+    )
+  }
+
   msgNeedResident() {
     if (this.state.isResident === false) {
       return (
@@ -238,7 +270,7 @@ export default class App extends React.Component {
     if (!this.state.isResident || !this.state.hasKiwiSaverAcc || 
       (this.state.ownedHouse === true) || !this.state.intendToLive ||
       !this.state.hasKiwiSaverThreeYears) {
-    return
+      return
     }
 
     if (this.state.contributeThreeYears === false) {
@@ -248,6 +280,21 @@ export default class App extends React.Component {
     }
   }
 
+  msgOverHousePriceLimit() {
+    console.log("msgOverHousePriceLimit....")
+    if (!this.state.isResident || !this.state.hasKiwiSaverAcc || 
+      (this.state.ownedHouse === true) || !this.state.intendToLive ||
+      !this.state.hasKiwiSaverThreeYears || !this.state.contributeThreeYears
+    ) {
+      return
+    }
+    console.log("msgOverHousePriceLimit....send message. isPriceOverLimit: ", this.state.isPriceOverLimit)
+    if (this.state.isPriceOverLimit === true) {
+      return (
+        <IneligibleMessage message="The house you want to buy is not within the purchase price threshold to be eligible for the Home Start Grant" />
+      )
+    }
+  }
   
 
   render() {
@@ -268,6 +315,8 @@ export default class App extends React.Component {
         { this.showKiwiSaverContributeQuestion() }
         { this.msgNeedContributeThreeYears() }
         { this.showHouseLocationQuestion() }
+        { this.showHousePriceQuestion() }
+        { this.msgOverHousePriceLimit() }
 
       </div>
     )
