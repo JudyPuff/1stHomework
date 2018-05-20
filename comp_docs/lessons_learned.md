@@ -1,0 +1,4 @@
+- openFisca
+-- calculations on openFisca
+- the legislative authority for Reserve Bank policy instruments
+- something about checking in regularly, being able to pivot, and listening to mentors
