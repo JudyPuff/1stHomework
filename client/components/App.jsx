@@ -24,7 +24,11 @@ export default class App extends React.Component {
       isPriceOverLimit: null,
       isBuyingAsIndividual: null,
       isIncomeBelowSingleLimit: null,
-      isIncomeBelowCombinedLimit: null
+      isIncomeBelowCombinedLimit: null,
+      singleSaving: 0,
+      doubleSaving: 0,
+      singleKiwiSaverAmount: 0,
+      doubleKiwiSaverAmount: 0
     }
 
     this.updateBuyingLocation = this.updateBuyingLocation.bind(this)
@@ -285,6 +289,131 @@ export default class App extends React.Component {
     )
   }
 
+  showSingleSavingQuestion() {
+    if (!this.state.isResident ||
+      !this.state.hasKiwiSaverAcc ||
+      (this.state.ownedHouse !== false) ||
+      !this.state.intendToLive ||
+      !this.state.hasKiwiSaverThreeYears ||
+      !this.state.contributeThreeYears ||
+      (this.state.buyingLocation <= 0) ||
+      (this.state.isPriceOverLimit != false) ||
+      (this.state.isBuyingAsIndividual !== true) ||
+      (this.state.isIncomeBelowSingleLimit !== true)
+     ) return
+
+    return (
+      <QuestionValue question="How much do you have saved in cash?"
+        questionNum="11.1.1" preLabel="$"
+        callbackUpdate={
+          (value) => {
+            this.state.singleSaving = Number(value)
+          }
+        }
+        callback={
+          () => {
+            // let isOverLimit = false
+            // if (this.state.housePrice >= this.state.housePriceLimit) {
+            //   isOverLimit = true
+            // }
+            // this.setState({isPriceOverLimit : isOverLimit})
+            console.log("Single saving is: ", this.state.singleSaving)
+          }
+        }
+      />
+    )
+  }
+
+  showSingleKiwiSaverAmountQuestion() {
+    if (!this.state.isResident ||
+      !this.state.hasKiwiSaverAcc ||
+      (this.state.ownedHouse !== false) ||
+      !this.state.intendToLive ||
+      !this.state.hasKiwiSaverThreeYears ||
+      !this.state.contributeThreeYears ||
+      (this.state.buyingLocation <= 0) ||
+      (this.state.isPriceOverLimit != false) ||
+      (this.state.isBuyingAsIndividual !== true) ||
+      (this.state.isIncomeBelowSingleLimit !== true)
+     ) return
+
+    return (
+      <QuestionValue question="How much do you have in your KiwiSaver account now?"
+        questionNum="11.1.2" preLabel="$"
+        callbackUpdate={
+          (value) => {
+            this.state.singleKiwiSaverAmount = Number(value)
+          }
+        }
+        callback={
+          () => {
+            console.log("Single KS amount is: ", this.state.singleKiwiSaverAmount)
+          }
+        }
+      />
+    )
+  }
+
+  showCombinedSavingQuestion() {
+    if (!this.state.isResident ||
+      !this.state.hasKiwiSaverAcc ||
+      (this.state.ownedHouse !== false) ||
+      !this.state.intendToLive ||
+      !this.state.hasKiwiSaverThreeYears ||
+      !this.state.contributeThreeYears ||
+      (this.state.buyingLocation <= 0) ||
+      (this.state.isPriceOverLimit != false) ||
+      (this.state.isBuyingAsIndividual !== false) ||
+      (this.state.isIncomeBelowCombinedLimit !== true)
+    ) return
+
+    return (
+      <QuestionValue question="How much do you and your co-buyers have saved in cash?"
+        questionNum="11.2.1" preLabel="$"
+        callbackUpdate={
+          (value) => {
+            this.state.doubleSaving = Number(value)
+          }
+        }
+        callback={
+          () => {
+            console.log("Double saving is: ", this.state.doubleSaving)
+          }
+        }
+      />
+    )
+  }
+
+  showDoubleKiwiSaverAmountQuestion() {
+    if (!this.state.isResident ||
+      !this.state.hasKiwiSaverAcc ||
+      (this.state.ownedHouse !== false) ||
+      !this.state.intendToLive ||
+      !this.state.hasKiwiSaverThreeYears ||
+      !this.state.contributeThreeYears ||
+      (this.state.buyingLocation <= 0) ||
+      (this.state.isPriceOverLimit != false) ||
+      (this.state.isBuyingAsIndividual !== false) ||
+      (this.state.isIncomeBelowCombinedLimit !== true)
+    ) return
+
+    return (
+      <QuestionValue question="How much do you have in your KiwiSaver account now?"
+        questionNum="11.2.2" preLabel="$"
+        callbackUpdate={
+          (value) => {
+            this.state.doubleKiwiSaverAmount = Number(value)
+          }
+        }
+        callback={
+          () => {
+            console.log("Double KS amount is: ", this.state.doubleKiwiSaverAmount)
+          }
+        }
+      />
+    )
+  }
+
   msgNeedResident() {
     if (this.state.isResident === false) {
       return (
@@ -426,6 +555,10 @@ export default class App extends React.Component {
         { this.showCombinedIncomeQuestion() }
         { this.msgSingleIncomeTooHigh() }
         { this.msgCombinedIncomeTooHigh() }
+        { this.showSingleSavingQuestion() }
+        { this.showSingleKiwiSaverAmountQuestion() }
+        { this.showCombinedSavingQuestion() }
+        { this.showDoubleKiwiSaverAmountQuestion() }
       </div>
     )
   }
