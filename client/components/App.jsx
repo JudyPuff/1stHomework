@@ -50,7 +50,7 @@ export default class App extends React.Component {
     if (this.state.isResident !== true) return
 
     return (
-      <QuestionYesNo question="Do you have a Kiwi Saver Account?"
+      <QuestionYesNo question="Do you have a KiwiSaver Account?"
         questionNum="2" stateValue={this.state.hasKiwiSaverAcc} callback={
           (answer) => {
             this.setState({hasKiwiSaverAcc : answer})
@@ -99,7 +99,7 @@ export default class App extends React.Component {
         !this.state.intendToLive ) return
 
     return (
-      <QuestionValue question="How many years have you had your Kiwi Saver account?"
+      <QuestionValue question="How many years have you had your KiwiSaver account?"
         questionNum="5" postLabel="year(s)"
         callbackUpdate={
           (value) => {
@@ -128,7 +128,7 @@ export default class App extends React.Component {
       !this.state.hasKiwiSaverThreeYears ) return
 
     return (
-      <QuestionYesNo question="Have you contributed to your Kiwi Saver account for more than three years?" questionNum="6" stateValue={this.state.contributeThreeYears}
+      <QuestionYesNo question="Have you contributed to your KiwiSaver account for more than three years?" questionNum="6" stateValue={this.state.contributeThreeYears}
         callback={
           (answer) => {
             this.setState({contributeThreeYears : answer})
@@ -298,7 +298,7 @@ export default class App extends React.Component {
     
     if (this.state.hasKiwiSaverAcc === false) {
       return (
-        <IneligibleMessage message="You need to have a Kiwi Saver Account to be eligible" />
+        <IneligibleMessage message="You need to have a KiwiSaver Account to be eligible" />
       )
     }
   }
@@ -337,7 +337,7 @@ export default class App extends React.Component {
 
     if (this.state.hasKiwiSaverThreeYears === false) {
       return (
-        <IneligibleMessage message="You need to own a Kiwi Saver Account for more than 3 years to be eligible" />
+        <IneligibleMessage message="You need to own a KiwiSaver Account for more than 3 years to be eligible" />
       )
     }
   }
@@ -351,7 +351,7 @@ export default class App extends React.Component {
 
     if (this.state.contributeThreeYears === false) {
       return (
-        <IneligibleMessage message="You are not eligible for Home Start Grant. But you are still eligible for Kiwi Saver withdrawal. Please contact your Kiwi Saver provider today." isWarning={true} />
+        <IneligibleMessage message="You are not eligible for HomeStart Grant. But you are still eligible for KiwiSaver withdrawal. Please contact your KiwiSaver provider today." isWarning={true} />
       )
     }
   }
@@ -366,7 +366,7 @@ export default class App extends React.Component {
 
     if (this.state.isPriceOverLimit === true) {
       return (
-        <IneligibleMessage message="The house you want to buy is not within the purchase price threshold to be eligible for the Home Start Grant" />
+        <IneligibleMessage message="The house you want to buy is not within the purchase price threshold to be eligible for the HomeStart Grant" />
       )
     }
   }
