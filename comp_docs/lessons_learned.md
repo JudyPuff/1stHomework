@@ -1,4 +1,5 @@
-- openFisca
--- calculations on openFisca
-- the legislative authority for Reserve Bank policy instruments
-- something about checking in regularly, being able to pivot, and listening to mentors
+- OpenFisca and coding in python!
+  - calculations on openFisca, writing formula
+- the legislative authority for Reserve Bank policy instruments (legal research)
+- working together in a team and being comfortable with an unfinished project
+
