@@ -370,6 +370,21 @@ export default class App extends React.Component {
       )
     }
   }
+
+  msgSingleIncomeTooHigh() {
+    if (!this.state.isResident || !this.state.hasKiwiSaverAcc || 
+      (this.state.ownedHouse === true) || !this.state.intendToLive ||
+      !this.state.hasKiwiSaverThreeYears || !this.state.contributeThreeYears ||
+      this.state.isBuyingAsIndividual !== true) {
+      return
+    }
+
+    if (this.state.isIncomeBelowSingleLimit === false) {
+      return (
+        <IneligibleMessage message="Your income is over the threshold" />
+      )
+    }
+  }
   
   msgCombinedIncomeTooHigh() {
     if (!this.state.isResident || !this.state.hasKiwiSaverAcc || 
@@ -381,7 +396,7 @@ export default class App extends React.Component {
 
     if (this.state.isIncomeBelowCombinedLimit === false) {
       return (
-        <IneligibleMessage message="Your combined household income is over the threshold for more than one buyer " />
+        <IneligibleMessage message="Your combined household income is over the threshold for more than one buyer" />
       )
     }
   }
@@ -409,6 +424,7 @@ export default class App extends React.Component {
         { this.showWhoBuyingQuestion() }
         { this.showSingleIncomeQuestion() }
         { this.showCombinedIncomeQuestion() }
+        { this.msgSingleIncomeTooHigh() }
         { this.msgCombinedIncomeTooHigh() }
       </div>
     )
