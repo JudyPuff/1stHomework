@@ -4,6 +4,7 @@ import Header from './Header'
 import QuestionYesNo from './QuestionYesNo'
 import IneligibleMessage from './IneligibleMessage'
 import RadioChoice from './RadioChoice'
+import QuestionValue from './QuestionValue'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ export default class App extends React.Component {
       ownedHouse: null,
       intendToLive: null,
       hasKiwiSaverThreeYears: null,
+      numYearsHasKiwiSaver: 0,
       contributeThreeYears: null,
       buyingLocation: 0
     }
@@ -89,10 +91,22 @@ export default class App extends React.Component {
         !this.state.intendToLive ) return
 
     return (
-      <QuestionYesNo question="Have you had your Kiwi Saver Account for more than three years?" questionNum="5" stateValue={this.state.hasKiwiSaverThreeYears}
+      <QuestionValue question="How many years have you had your Kiwi Saver account?"
+        questionNum="5"
+        callbackUpdate={
+          (value) => {
+            this.state.numYearsHasKiwiSaver = value
+          }
+
+        }
         callback={
-          (answer) => {
-            this.setState({hasKiwiSaverThreeYears : answer})
+          () => {
+            let isMoreThanThreeYears = false
+            if (this.state.numYearsHasKiwiSaver >= 3) {
+              isMoreThanThreeYears = true
+            }
+            console.log("showKiwiSaverDurationQuestion callback")
+            this.setState({hasKiwiSaverThreeYears : isMoreThanThreeYears})
           }
         }
       />
@@ -238,7 +252,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="mb-5">
         <Header />
 
         { this.showResidentQuestion() }  
