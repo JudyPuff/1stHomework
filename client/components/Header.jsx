@@ -6,7 +6,7 @@ export default class Header extends React.Component {
         return (
 
             <div className="jumbotron">
-                <h1>Kiwi Saver Eligibility Calculator</h1>
+                <h1>KiwiSaver Eligibility Calculator</h1>
                 <p>Find out if you are eligible to buy a house with KiwiSaver and HomeStart Grant.</p>
             </div>
 

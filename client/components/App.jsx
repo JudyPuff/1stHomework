@@ -304,7 +304,7 @@ export default class App extends React.Component {
 
     return (
       <QuestionValue question="How much do you have saved in cash?"
-        questionNum="11.1.1" preLabel="$"
+        questionNum="11.1" preLabel="$"
         callbackUpdate={
           (value) => {
             this.state.singleSaving = Number(value)
@@ -339,7 +339,7 @@ export default class App extends React.Component {
 
     return (
       <QuestionValue question="How much do you have in your KiwiSaver account now?"
-        questionNum="11.1.2" preLabel="$"
+        questionNum="12.1" preLabel="$"
         callbackUpdate={
           (value) => {
             this.state.singleKiwiSaverAmount = Number(value)
@@ -369,7 +369,7 @@ export default class App extends React.Component {
 
     return (
       <QuestionValue question="How much do you and your co-buyers have saved in cash?"
-        questionNum="11.2.1" preLabel="$"
+        questionNum="11.2" preLabel="$"
         callbackUpdate={
           (value) => {
             this.state.doubleSaving = Number(value)
@@ -399,7 +399,7 @@ export default class App extends React.Component {
 
     return (
       <QuestionValue question="How much do you have in your KiwiSaver account now?"
-        questionNum="11.2.2" preLabel="$"
+        questionNum="12.2" preLabel="$"
         callbackUpdate={
           (value) => {
             this.state.doubleKiwiSaverAmount = Number(value)
