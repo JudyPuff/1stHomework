@@ -19,9 +19,15 @@ export default class App extends React.Component {
       numYearsHasKiwiSaver: 0,
       contributeThreeYears: null,
       buyingLocation: 0,
+      housePriceLimit: 800000,
       housePrice: 0,
-      isPriceOverLimit: null
+      isPriceOverLimit: null,
+      isBuyingAsIndividual: null,
+      isIncomeBelowSingleLimit: null,
+      isIncomeBelowCombinedLimit: null
     }
+
+    this.updateBuyingLocation = this.updateBuyingLocation.bind(this)
   }
 
   // componentDidMount() {
@@ -153,29 +159,31 @@ export default class App extends React.Component {
             <RadioChoice identifier={questionIdentifier} radioValue={1}
               radioValueStr="1" stateValue={stateValue}
               label={location1}
-              callback={
-                (answer) => {
-                  this.setState({buyingLocation : answer})
-                }
-              } />
+              callback={this.updateBuyingLocation}
+            />
             <RadioChoice identifier={questionIdentifier} radioValue={2}
               radioValueStr="2" stateValue={stateValue}
               label={location2}
-              callback={
-                (answer) => {
-                  this.setState({buyingLocation : answer})
-                }
-              }/>
+              callback={this.updateBuyingLocation}
+            />
             <RadioChoice identifier={questionIdentifier} radioValue={3}
               radioValueStr="3" stateValue={stateValue}
               label={location3}
-              callback={
-                (answer) => {
-                  this.setState({buyingLocation : answer})
-                }
-              }/>
+              callback={this.updateBuyingLocation}
+            />
           </form>
       )
+  }
+
+  updateBuyingLocation(answer) {
+    if (answer == 1) {
+      this.state.housePriceLimit = 600000
+    } else if (answer == 2) {
+      this.state.housePriceLimit = 500000
+    } else {
+      this.state.housePriceLimit = 400000
+    }
+    this.setState({buyingLocation : answer})
   }
 
   showHousePriceQuestion() {
@@ -199,10 +207,79 @@ export default class App extends React.Component {
         callback={
           () => {
             let isOverLimit = false
-            if (this.state.housePrice >= 500000) {
+            if (this.state.housePrice >= this.state.housePriceLimit) {
               isOverLimit = true
             }
+            console.log("isOverLimit? ", isOverLimit)
             this.setState({isPriceOverLimit : isOverLimit})
+          }
+        }
+      />
+    )
+  }
+
+  showWhoBuyingQuestion() {
+    if (!this.state.isResident ||
+      !this.state.hasKiwiSaverAcc ||
+      (this.state.ownedHouse !== false) ||
+      !this.state.intendToLive ||
+      !this.state.hasKiwiSaverThreeYears ||
+      !this.state.contributeThreeYears ||
+      (this.state.buyingLocation <= 0) ||
+      (this.state.isPriceOverLimit != false) 
+     ) return
+
+    return (
+      <QuestionYesNo question="Are you buying this house as an individual?" questionNum="9" stateValue={this.state.isBuyingAsIndividual}
+        callback={
+          (answer) => {
+            this.setState({isBuyingAsIndividual : answer})
+          }
+        }
+      />
+    )
+  }
+
+  showSingleIncomeQuestion() {
+    if (!this.state.isResident ||
+      !this.state.hasKiwiSaverAcc ||
+      (this.state.ownedHouse !== false) ||
+      !this.state.intendToLive ||
+      !this.state.hasKiwiSaverThreeYears ||
+      !this.state.contributeThreeYears ||
+      (this.state.buyingLocation <= 0) ||
+      (this.state.isPriceOverLimit != false) ||
+      (this.isBuyingAsIndividual === null)
+     ) return
+
+    return (
+      <QuestionYesNo question="Is your income below $85,000 in the last 12 months?" questionNum="10.1" stateValue={this.state.isIncomeBelowSingleLimit}
+        callback={
+          (answer) => {
+            this.setState({isIncomeBelowSingleLimit : answer})
+          }
+        }
+      />
+    )
+  }
+
+  showCombinedIncomeQuestion() {
+    if (!this.state.isResident ||
+      !this.state.hasKiwiSaverAcc ||
+      (this.state.ownedHouse !== false) ||
+      !this.state.intendToLive ||
+      !this.state.hasKiwiSaverThreeYears ||
+      !this.state.contributeThreeYears ||
+      (this.state.buyingLocation <= 0) ||
+      (this.state.isPriceOverLimit != false) ||
+      (this.isBuyingAsIndividual === null)
+     ) return
+
+    return (
+      <QuestionYesNo question="Is your household income (including the person you are buying the house with) below $130,000 in the last 12 months?" questionNum="10.2" stateValue={this.state.isIncomeBelowCombinedLimit}
+        callback={
+          (answer) => {
+            this.setState({isIncomeBelowCombinedLimit : answer})
           }
         }
       />
@@ -281,14 +358,13 @@ export default class App extends React.Component {
   }
 
   msgOverHousePriceLimit() {
-    console.log("msgOverHousePriceLimit....")
     if (!this.state.isResident || !this.state.hasKiwiSaverAcc || 
       (this.state.ownedHouse === true) || !this.state.intendToLive ||
       !this.state.hasKiwiSaverThreeYears || !this.state.contributeThreeYears
     ) {
       return
     }
-    console.log("msgOverHousePriceLimit....send message. isPriceOverLimit: ", this.state.isPriceOverLimit)
+
     if (this.state.isPriceOverLimit === true) {
       return (
         <IneligibleMessage message="The house you want to buy is not within the purchase price threshold to be eligible for the Home Start Grant" />
@@ -317,6 +393,9 @@ export default class App extends React.Component {
         { this.showHouseLocationQuestion() }
         { this.showHousePriceQuestion() }
         { this.msgOverHousePriceLimit() }
+        { this.showWhoBuyingQuestion() }
+        { this.showSingleIncomeQuestion() }
+        { this.showCombinedIncomeQuestion() }
 
       </div>
     )
