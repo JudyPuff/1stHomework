@@ -249,7 +249,7 @@ export default class App extends React.Component {
       !this.state.contributeThreeYears ||
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) ||
-      (this.isBuyingAsIndividual === null)
+      (this.state.isBuyingAsIndividual !== true)
      ) return
 
     return (
@@ -272,7 +272,7 @@ export default class App extends React.Component {
       !this.state.contributeThreeYears ||
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) ||
-      (this.isBuyingAsIndividual === null)
+      (this.state.isBuyingAsIndividual !== false)
      ) return
 
     return (
