@@ -24,6 +24,6 @@ Rules from KiwiSaver legislation and Reserve Bank banking supervision handbook, 
 
 ### Links to project video and source code
 
-* - link to YouTube
+* - [1stHomework on YouTube](https://youtu.be/a3joIGvUW2A)
 * - [1stHomework at Github](https://github.com/JudyPuff/1stHomework)
 
