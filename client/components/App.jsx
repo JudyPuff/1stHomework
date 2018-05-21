@@ -27,6 +27,8 @@ export default class App extends React.Component {
       isIncomeBelowCombinedLimit: null,
       singleSaving: 0,
       doubleSaving: 0,
+      hasEnteredSingleSaving: null,
+      hasEnteredDoubleSaving: null,
       singleKiwiSaverAmount: 0,
       doubleKiwiSaverAmount: 0
     }
@@ -312,12 +314,7 @@ export default class App extends React.Component {
         }
         callback={
           () => {
-            // let isOverLimit = false
-            // if (this.state.housePrice >= this.state.housePriceLimit) {
-            //   isOverLimit = true
-            // }
-            // this.setState({isPriceOverLimit : isOverLimit})
-            console.log("Single saving is: ", this.state.singleSaving)
+            this.setState({hasEnteredSingleSaving : true})
           }
         }
       />
@@ -334,7 +331,8 @@ export default class App extends React.Component {
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) ||
       (this.state.isBuyingAsIndividual !== true) ||
-      (this.state.isIncomeBelowSingleLimit !== true)
+      (this.state.isIncomeBelowSingleLimit !== true) ||
+      (this.state.hasEnteredSingleSaving !== true)
      ) return
 
     return (
@@ -377,7 +375,7 @@ export default class App extends React.Component {
         }
         callback={
           () => {
-            console.log("Double saving is: ", this.state.doubleSaving)
+            this.setState({hasEnteredDoubleSaving : true})
           }
         }
       />
@@ -394,11 +392,12 @@ export default class App extends React.Component {
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) ||
       (this.state.isBuyingAsIndividual !== false) ||
-      (this.state.isIncomeBelowCombinedLimit !== true)
+      (this.state.isIncomeBelowCombinedLimit !== true) ||
+      (this.state.hasEnteredDoubleSaving !== true)
     ) return
 
     return (
-      <QuestionValue question="How much do you have in your KiwiSaver account now?"
+      <QuestionValue question="How much do you and your co-buyers have in both KiwiSaver account now?"
         questionNum="12.2" preLabel="$"
         callbackUpdate={
           (value) => {
