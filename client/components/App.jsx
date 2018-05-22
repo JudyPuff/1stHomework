@@ -16,8 +16,8 @@ export default class App extends React.Component {
       ownedHouse: null,
       intendToLive: null,
       hasKiwiSaverThreeYears: null,
-      numYearsHasKiwiSaver: 0,
       contributeThreeYears: null,
+      numYearsContributeKiwiSaver: 0,
       buyingLocation: 0,
       housePriceLimit: 800000,
       housePrice: 0,
@@ -105,21 +105,10 @@ export default class App extends React.Component {
         !this.state.intendToLive ) return
 
     return (
-      <QuestionValue question="How many years have you had your KiwiSaver account?"
-        questionNum="5" postLabel="year(s)"
-        callbackUpdate={
-          (value) => {
-            this.state.numYearsHasKiwiSaver = Number(value)
-          }
-
-        }
+      <QuestionYesNo question="Have you had your KiwiSaver account for more than 3 years?" questionNum="5" stateValue={this.state.hasKiwiSaverThreeYears}
         callback={
-          () => {
-            let isMoreThanThreeYears = false
-            if (this.state.numYearsHasKiwiSaver >= 3) {
-              isMoreThanThreeYears = true
-            }
-            this.setState({hasKiwiSaverThreeYears : isMoreThanThreeYears})
+          (answer) => {
+            this.setState({hasKiwiSaverThreeYears : answer})
           }
         }
       />
@@ -134,10 +123,21 @@ export default class App extends React.Component {
       !this.state.hasKiwiSaverThreeYears ) return
 
     return (
-      <QuestionYesNo question="Have you contributed to your KiwiSaver account for more than three years?" questionNum="6" stateValue={this.state.contributeThreeYears}
+      <QuestionValue question="How many years have you contributed to your KiwiSaver account continuously to date?"
+        questionNum="6" postLabel="year(s)"
+        callbackUpdate={
+          (value) => {
+            this.state.numYearsContributeKiwiSaver = Number(value)
+          }
+
+        }
         callback={
-          (answer) => {
-            this.setState({contributeThreeYears : answer})
+          () => {
+            let isMoreThanThreeYears = false
+            if (this.state.numYearsContributeKiwiSaver >= 3) {
+              isMoreThanThreeYears = true
+            }
+            this.setState({contributeThreeYears : isMoreThanThreeYears})
           }
         }
       />
