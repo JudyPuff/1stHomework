@@ -42,13 +42,16 @@ export default class App extends React.Component {
 
   showResidentQuestion() {
     return (
-      <QuestionYesNo question="Are you a New Zealand citizen or resident?"
-        questionNum="1" stateValue={this.state.isResident} callback={ 
-          (answer) => { 
-            this.setState({isResident : answer})
+      <div>
+        <QuestionYesNo question="Are you a New Zealand citizen or resident?"
+          questionNum="1" stateValue={this.state.isResident} callback={
+            (answer) => {
+              this.setState({isResident : answer})
+            }
           }
-        }
-      />
+        />
+        { this.msgNeedResident() }
+      </div>
     )
   }
 
@@ -56,13 +59,16 @@ export default class App extends React.Component {
     if (this.state.isResident !== true) return
 
     return (
-      <QuestionYesNo question="Do you have a KiwiSaver Account?"
-        questionNum="2" stateValue={this.state.hasKiwiSaverAcc} callback={
-          (answer) => {
-            this.setState({hasKiwiSaverAcc : answer})
+      <div>
+        <QuestionYesNo question="Do you have a KiwiSaver Account?"
+          questionNum="2" stateValue={this.state.hasKiwiSaverAcc} callback={
+            (answer) => {
+              this.setState({hasKiwiSaverAcc : answer})
+            }
           }
-        }
-      />
+        />
+        { this.msgNeedKiwiSaverAccount() }
+      </div>
     ) 
   }
 
@@ -71,13 +77,16 @@ export default class App extends React.Component {
         !this.state.hasKiwiSaverAcc ) return
 
     return (
-      <QuestionYesNo question="Have you owned a house before?"
-        questionNum="3" stateValue={this.state.ownedHouse} callback={ 
-          (answer) => { 
-            this.setState({ownedHouse : answer})
+      <div>
+        <QuestionYesNo question="Have you owned a house before?"
+          questionNum="3" stateValue={this.state.ownedHouse} callback={ 
+            (answer) => { 
+              this.setState({ownedHouse : answer})
+            }
           }
-        }
-      />
+        />
+        { this.msgCannotOwnedHouse() }
+      </div>
     )
   }
 
@@ -87,14 +96,17 @@ export default class App extends React.Component {
       (this.state.ownedHouse !== false) ) return
 
       return (
-        <QuestionYesNo question="Do you intend to live in the house?"
-          questionNum="4" stateValue={this.state.intendToLive}
-          callback={
-            (answer) => {
-              this.setState({intendToLive : answer})
+        <div>
+          <QuestionYesNo question="Do you intend to live in the house?"
+            questionNum="4" stateValue={this.state.intendToLive}
+            callback={
+              (answer) => {
+                this.setState({intendToLive : answer})
+              }
             }
-          }
-        />
+          />
+          { this.msgMustIntendToLive() }
+        </div>
       )
   }
 
@@ -105,13 +117,16 @@ export default class App extends React.Component {
         !this.state.intendToLive ) return
 
     return (
-      <QuestionYesNo question="Have you had your KiwiSaver account for more than 3 years?" questionNum="5" stateValue={this.state.hasKiwiSaverThreeYears}
-        callback={
-          (answer) => {
-            this.setState({hasKiwiSaverThreeYears : answer})
+      <div>
+        <QuestionYesNo question="Have you had your KiwiSaver account for more than 3 years?" questionNum="5" stateValue={this.state.hasKiwiSaverThreeYears}
+          callback={
+            (answer) => {
+              this.setState({hasKiwiSaverThreeYears : answer})
+            }
           }
-        }
-      />
+        />
+        { this.msgNeedThreeYearsKiwiSaver() }
+      </div>
     )
   }
 
@@ -123,24 +138,27 @@ export default class App extends React.Component {
       !this.state.hasKiwiSaverThreeYears ) return
 
     return (
-      <QuestionValue question="How many years have you contributed to your KiwiSaver account continuously to date?"
-        questionNum="6" postLabel="year(s)"
-        callbackUpdate={
-          (value) => {
-            this.state.numYearsContributeKiwiSaver = Number(value)
-          }
-
-        }
-        callback={
-          () => {
-            let isMoreThanThreeYears = false
-            if (this.state.numYearsContributeKiwiSaver >= 3) {
-              isMoreThanThreeYears = true
+      <div>
+        <QuestionValue question="How many years have you contributed to your KiwiSaver account continuously to date?"
+          questionNum="6" postLabel="year(s)"
+          callbackUpdate={
+            (value) => {
+              this.state.numYearsContributeKiwiSaver = Number(value)
             }
-            this.setState({contributeThreeYears : isMoreThanThreeYears})
+
           }
-        }
-      />
+          callback={
+            () => {
+              let isMoreThanThreeYears = false
+              if (this.state.numYearsContributeKiwiSaver >= 3) {
+                isMoreThanThreeYears = true
+              }
+              this.setState({contributeThreeYears : isMoreThanThreeYears})
+            }
+          }
+        />
+        { this.msgNeedContributeThreeYears() }
+      </div>
     )
   }
 
@@ -203,23 +221,26 @@ export default class App extends React.Component {
       ) return
 
     return (
-      <QuestionValue question="How much is the house you want to buy?"
-        questionNum="8" preLabel="$"
-        callbackUpdate={
-          (value) => {
-            this.state.housePrice = Number(value)
-          }
-        }
-        callback={
-          () => {
-            let isOverLimit = false
-            if (this.state.housePrice >= this.state.housePriceLimit) {
-              isOverLimit = true
+      <div>
+        <QuestionValue question="How much is the house you want to buy?"
+          questionNum="8" preLabel="$"
+          callbackUpdate={
+            (value) => {
+              this.state.housePrice = Number(value)
             }
-            this.setState({isPriceOverLimit : isOverLimit})
           }
-        }
-      />
+          callback={
+            () => {
+              let isOverLimit = false
+              if (this.state.housePrice >= this.state.housePriceLimit) {
+                isOverLimit = true
+              }
+              this.setState({isPriceOverLimit : isOverLimit})
+            }
+          }
+        />
+        { this.msgOverHousePriceLimit() }
+      </div>
     )
   }
 
@@ -258,13 +279,16 @@ export default class App extends React.Component {
      ) return
 
     return (
-      <QuestionYesNo question="Is your income below $85,000 in the last 12 months?" questionNum="10.1" stateValue={this.state.isIncomeBelowSingleLimit}
-        callback={
-          (answer) => {
-            this.setState({isIncomeBelowSingleLimit : answer})
+      <div>
+        <QuestionYesNo question="Is your income below $85,000 in the last 12 months?" questionNum="10.1" stateValue={this.state.isIncomeBelowSingleLimit}
+          callback={
+            (answer) => {
+              this.setState({isIncomeBelowSingleLimit : answer})
+            }
           }
-        }
-      />
+        />
+        { this.msgSingleIncomeTooHigh() }
+      </div>
     )
   }
 
@@ -281,13 +305,16 @@ export default class App extends React.Component {
      ) return
 
     return (
-      <QuestionYesNo question="Is your household income (including the person you are buying the house with) below $130,000 in the last 12 months?" questionNum="10.2" stateValue={this.state.isIncomeBelowCombinedLimit}
-        callback={
-          (answer) => {
-            this.setState({isIncomeBelowCombinedLimit : answer})
+      <div>
+        <QuestionYesNo question="Is your household income (including the person you are buying the house with) below $130,000 in the last 12 months?" questionNum="10.2" stateValue={this.state.isIncomeBelowCombinedLimit}
+          callback={
+            (answer) => {
+              this.setState({isIncomeBelowCombinedLimit : answer})
+            }
           }
-        }
-      />
+        />
+        { this.msgCombinedIncomeTooHigh() }
+      </div>
     )
   }
 
@@ -535,25 +562,16 @@ export default class App extends React.Component {
         <Header />
 
         { this.showResidentQuestion() }  
-        { this.msgNeedResident() }
         { this.showKiwiSaverAccQuestion() }
-        { this.msgNeedKiwiSaverAccount() }
         { this.showOwnedHouseQuestion() }
-        { this.msgCannotOwnedHouse() }
-        { this.showIntendToLiveQuestion() }
-        { this.msgMustIntendToLive() }
+        { this.showIntendToLiveQuestion() }s
         { this.showKiwiSaverDurationQuestion() }
-        { this.msgNeedThreeYearsKiwiSaver() }
         { this.showKiwiSaverContributeQuestion() }
-        { this.msgNeedContributeThreeYears() }
         { this.showHouseLocationQuestion() }
         { this.showHousePriceQuestion() }
-        { this.msgOverHousePriceLimit() }
         { this.showWhoBuyingQuestion() }
         { this.showSingleIncomeQuestion() }
         { this.showCombinedIncomeQuestion() }
-        { this.msgSingleIncomeTooHigh() }
-        { this.msgCombinedIncomeTooHigh() }
         { this.showSingleSavingQuestion() }
         { this.showSingleKiwiSaverAmountQuestion() }
         { this.showCombinedSavingQuestion() }
