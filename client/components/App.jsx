@@ -20,6 +20,7 @@ export default class App extends React.Component {
       numYearsContributeKiwiSaver: 0,
       buyingLocation: 0,
       housePriceLimit: 800000,
+      isNewHouse: null,
       housePrice: 0,
       isPriceOverLimit: null,
       isBuyingAsIndividual: null,
@@ -33,6 +34,7 @@ export default class App extends React.Component {
       doubleKiwiSaverAmount: 0
     }
 
+    this.repliedIsNewHouse = false
     this.updateBuyingLocation = this.updateBuyingLocation.bind(this)
   }
 
@@ -244,7 +246,7 @@ export default class App extends React.Component {
     )
   }
 
-  showWhoBuyingQuestion() {
+  showNewHouseQuestion() {
     if (!this.state.isResident ||
       !this.state.hasKiwiSaverAcc ||
       (this.state.ownedHouse !== false) ||
@@ -255,8 +257,32 @@ export default class App extends React.Component {
       (this.state.isPriceOverLimit != false) 
      ) return
 
+     return (
+      <QuestionYesNo question="Are you buying a new home, a property bought off the plans or land to build a new home on?" questionNum="9" stateValue={this.state.isNewHouse}
+        callback={
+          (answer) => {
+            this.setState({isNewHouse : answer})
+            this.repliedIsNewHouse = true;
+          }
+        }
+      />
+    )
+  }
+
+  showWhoBuyingQuestion() {
+    if (!this.state.isResident ||
+      !this.state.hasKiwiSaverAcc ||
+      (this.state.ownedHouse !== false) ||
+      !this.state.intendToLive ||
+      !this.state.hasKiwiSaverThreeYears ||
+      !this.state.contributeThreeYears ||
+      (this.state.buyingLocation <= 0) ||
+      (this.state.isPriceOverLimit != false) ||
+      !this.repliedIsNewHouse
+     ) return
+
     return (
-      <QuestionYesNo question="Are you buying this house as an individual?" questionNum="9" stateValue={this.state.isBuyingAsIndividual}
+      <QuestionYesNo question="Are you buying this house as an individual?" questionNum="10" stateValue={this.state.isBuyingAsIndividual}
         callback={
           (answer) => {
             this.setState({isBuyingAsIndividual : answer})
@@ -275,12 +301,13 @@ export default class App extends React.Component {
       !this.state.contributeThreeYears ||
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) ||
-      (this.state.isBuyingAsIndividual !== true)
+      (this.state.isBuyingAsIndividual !== true) ||
+      !this.repliedIsNewHouse
      ) return
 
     return (
       <div>
-        <QuestionYesNo question="Is your income below $85,000 in the last 12 months?" questionNum="10.1" stateValue={this.state.isIncomeBelowSingleLimit}
+        <QuestionYesNo question="Is your income below $85,000 in the last 12 months?" questionNum="11.1" stateValue={this.state.isIncomeBelowSingleLimit}
           callback={
             (answer) => {
               this.setState({isIncomeBelowSingleLimit : answer})
@@ -301,12 +328,13 @@ export default class App extends React.Component {
       !this.state.contributeThreeYears ||
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) ||
-      (this.state.isBuyingAsIndividual !== false)
+      (this.state.isBuyingAsIndividual !== false) ||
+      !this.repliedIsNewHouse
      ) return
 
     return (
       <div>
-        <QuestionYesNo question="Is your household income (including the person you are buying the house with) below $130,000 in the last 12 months?" questionNum="10.2" stateValue={this.state.isIncomeBelowCombinedLimit}
+        <QuestionYesNo question="Is your household income (including the person you are buying the house with) below $130,000 in the last 12 months?" questionNum="11.2" stateValue={this.state.isIncomeBelowCombinedLimit}
           callback={
             (answer) => {
               this.setState({isIncomeBelowCombinedLimit : answer})
@@ -328,12 +356,13 @@ export default class App extends React.Component {
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) ||
       (this.state.isBuyingAsIndividual !== true) ||
-      (this.state.isIncomeBelowSingleLimit !== true)
+      (this.state.isIncomeBelowSingleLimit !== true) ||
+      !this.repliedIsNewHouse
      ) return
 
     return (
       <QuestionValue question="How much do you have saved in cash?"
-        questionNum="11.1" preLabel="$"
+        questionNum="12.1" preLabel="$"
         callbackUpdate={
           (value) => {
             this.state.singleSaving = Number(value)
@@ -359,12 +388,13 @@ export default class App extends React.Component {
       (this.state.isPriceOverLimit != false) ||
       (this.state.isBuyingAsIndividual !== true) ||
       (this.state.isIncomeBelowSingleLimit !== true) ||
-      (this.state.hasEnteredSingleSaving !== true)
+      (this.state.hasEnteredSingleSaving !== true) ||
+      !this.repliedIsNewHouse
      ) return
 
     return (
       <QuestionValue question="How much do you have in your KiwiSaver account now?"
-        questionNum="12.1" preLabel="$"
+        questionNum="13.1" preLabel="$"
         callbackUpdate={
           (value) => {
             this.state.singleKiwiSaverAmount = Number(value)
@@ -389,12 +419,13 @@ export default class App extends React.Component {
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) ||
       (this.state.isBuyingAsIndividual !== false) ||
-      (this.state.isIncomeBelowCombinedLimit !== true)
+      (this.state.isIncomeBelowCombinedLimit !== true) ||
+      !this.repliedIsNewHouse
     ) return
 
     return (
       <QuestionValue question="How much do you and your co-buyers have saved in cash?"
-        questionNum="11.2" preLabel="$"
+        questionNum="12.2" preLabel="$"
         callbackUpdate={
           (value) => {
             this.state.doubleSaving = Number(value)
@@ -420,12 +451,13 @@ export default class App extends React.Component {
       (this.state.isPriceOverLimit != false) ||
       (this.state.isBuyingAsIndividual !== false) ||
       (this.state.isIncomeBelowCombinedLimit !== true) ||
-      (this.state.hasEnteredDoubleSaving !== true)
+      (this.state.hasEnteredDoubleSaving !== true) ||
+      !this.repliedIsNewHouse
     ) return
 
     return (
       <QuestionValue question="How much do you and your co-buyers have in both KiwiSaver account now?"
-        questionNum="12.2" preLabel="$"
+        questionNum="13.2" preLabel="$"
         callbackUpdate={
           (value) => {
             this.state.doubleKiwiSaverAmount = Number(value)
@@ -564,11 +596,12 @@ export default class App extends React.Component {
         { this.showResidentQuestion() }  
         { this.showKiwiSaverAccQuestion() }
         { this.showOwnedHouseQuestion() }
-        { this.showIntendToLiveQuestion() }s
+        { this.showIntendToLiveQuestion() }
         { this.showKiwiSaverDurationQuestion() }
         { this.showKiwiSaverContributeQuestion() }
         { this.showHouseLocationQuestion() }
         { this.showHousePriceQuestion() }
+        { this.showNewHouseQuestion() }
         { this.showWhoBuyingQuestion() }
         { this.showSingleIncomeQuestion() }
         { this.showCombinedIncomeQuestion() }
