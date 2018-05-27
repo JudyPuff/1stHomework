@@ -17,6 +17,7 @@ export default class App extends React.Component {
       intendToLive: null,
       hasKiwiSaverThreeYears: null,
       contributeThreeYears: null,
+      hasReceivedGrant: null,
       numYearsContributeKiwiSaver: 0,
       buyingLocation: 0,
       housePriceLimit: 800000,
@@ -116,7 +117,7 @@ export default class App extends React.Component {
     if (!this.state.isResident ||
         !this.state.hasKiwiSaverAcc ||
         (this.state.ownedHouse !== false) ||
-        (this.state.intendToLive === null)) return
+        !this.state.intendToLive) return
 
     return (
       <div>
@@ -136,7 +137,7 @@ export default class App extends React.Component {
     if (!this.state.isResident ||
         !this.state.hasKiwiSaverAcc ||
         (this.state.ownedHouse !== false) ||
-        (this.state.intendToLive === null) ||
+        !this.state.intendToLive ||
         !this.state.hasKiwiSaverThreeYears ) return
 
     return (
@@ -164,15 +165,38 @@ export default class App extends React.Component {
     )
   }
 
+  showReceivedGrantQuestion() {
+    if (!this.state.isResident ||
+      !this.state.hasKiwiSaverAcc ||
+      (this.state.ownedHouse !== false) ||
+      !this.state.intendToLive ||
+      !this.state.hasKiwiSaverThreeYears ||
+      (this.state.contributeThreeYears === null)) return
+
+  return (
+    <div>
+      <QuestionYesNo question="Did you received  KiwiSaver HomeStart grant or KiwiSaver deposit subsidy before?"
+        questionNum="7" stateValue={this.state.hasReceivedGrant}
+        callback={
+          (answer) => {
+            this.setState({hasReceivedGrant : answer})
+          }
+        }
+    />
+    { this.msgMustNotReceivedGrant() }
+    </div> )
+  }
+
   showHouseLocationQuestion() {
     if (!this.state.isResident ||
         !this.state.hasKiwiSaverAcc ||
         (this.state.ownedHouse !== false) ||
-        (this.state.intendToLive === null) ||
+        !this.state.intendToLive ||
         !this.state.hasKiwiSaverThreeYears ||
-        (this.state.contributeThreeYears === null)) return
+        (this.state.contributeThreeYears === null) ||
+        (this.state.hasReceivedGrant !== false)) return
 
-      const questionNum = 7
+      const questionNum = 8
       const questionIdentifier = "question-" + questionNum
       const location1 = "Auckland"
       const location2 = "Hamilton / Tauranga / Western Bay of Plenty / Kapiti Coast / Porirua / Uper Hutt / Hutt City / Wellington / Tasma / Nelson / Waimakariri / Christchurch / Selwyn / Queenstown Lakes"
@@ -216,16 +240,17 @@ export default class App extends React.Component {
     if (!this.state.isResident ||
        !this.state.hasKiwiSaverAcc ||
        (this.state.ownedHouse !== false) ||
-       (this.state.intendToLive === null) ||
+       !this.state.intendToLive ||
        !this.state.hasKiwiSaverThreeYears ||
        (this.state.contributeThreeYears  === null) ||
+       (this.state.hasReceivedGrant !== false) ||
        (this.state.buyingLocation <= 0)
       ) return
 
     return (
       <div>
         <QuestionValue question="How much is the house you want to buy?"
-          questionNum="8" preLabel="$"
+          questionNum="9" preLabel="$"
           callbackUpdate={
             (value) => {
               this.state.housePrice = Number(value)
@@ -250,15 +275,16 @@ export default class App extends React.Component {
     if (!this.state.isResident ||
       !this.state.hasKiwiSaverAcc ||
       (this.state.ownedHouse !== false) ||
-      (this.state.intendToLive === null) ||
+      !this.state.intendToLive ||
       !this.state.hasKiwiSaverThreeYears ||
       (this.state.contributeThreeYears  === null) ||
+      (this.state.hasReceivedGrant !== false) ||
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) 
      ) return
 
      return (
-      <QuestionYesNo question="Are you buying a new home, a property bought off the plans or land to build a new home on?" questionNum="9" stateValue={this.state.isNewHouse}
+      <QuestionYesNo question="Are you buying a new home, a property bought off the plans or land to build a new home on?" questionNum="10" stateValue={this.state.isNewHouse}
         callback={
           (answer) => {
             this.setState({isNewHouse : answer})
@@ -273,16 +299,17 @@ export default class App extends React.Component {
     if (!this.state.isResident ||
       !this.state.hasKiwiSaverAcc ||
       (this.state.ownedHouse !== false) ||
-      (this.state.intendToLive === null) ||
+      !this.state.intendToLive ||
       !this.state.hasKiwiSaverThreeYears ||
       (this.state.contributeThreeYears  === null) ||
+      (this.state.hasReceivedGrant !== false) ||
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) ||
       !this.repliedIsNewHouse
      ) return
 
     return (
-      <QuestionYesNo question="Are you buying this house as an individual?" questionNum="10" stateValue={this.state.isBuyingAsIndividual}
+      <QuestionYesNo question="Are you buying this house as an individual?" questionNum="11" stateValue={this.state.isBuyingAsIndividual}
         callback={
           (answer) => {
             this.setState({isBuyingAsIndividual : answer})
@@ -296,9 +323,10 @@ export default class App extends React.Component {
     if (!this.state.isResident ||
       !this.state.hasKiwiSaverAcc ||
       (this.state.ownedHouse !== false) ||
-      (this.state.intendToLive === null) ||
+      !this.state.intendToLive ||
       !this.state.hasKiwiSaverThreeYears ||
       (this.state.contributeThreeYears  === null) ||
+      (this.state.hasReceivedGrant !== false) ||
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) ||
       (this.state.isBuyingAsIndividual !== true) ||
@@ -307,7 +335,7 @@ export default class App extends React.Component {
 
     return (
       <div>
-        <QuestionYesNo question="Is your income below $85,000 in the last 12 months?" questionNum="11.1" stateValue={this.state.isIncomeBelowSingleLimit}
+        <QuestionYesNo question="Is your income below $85,000 in the last 12 months?" questionNum="12.1" stateValue={this.state.isIncomeBelowSingleLimit}
           callback={
             (answer) => {
               this.setState({isIncomeBelowSingleLimit : answer})
@@ -323,9 +351,10 @@ export default class App extends React.Component {
     if (!this.state.isResident ||
       !this.state.hasKiwiSaverAcc ||
       (this.state.ownedHouse !== false) ||
-      (this.state.intendToLive === null) ||
+      !this.state.intendToLive ||
       !this.state.hasKiwiSaverThreeYears ||
       (this.state.contributeThreeYears  === null) ||
+      (this.state.hasReceivedGrant !== false) ||
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) ||
       (this.state.isBuyingAsIndividual !== false) ||
@@ -334,7 +363,7 @@ export default class App extends React.Component {
 
     return (
       <div>
-        <QuestionYesNo question="Is your household income (including the person you are buying the house with) below $130,000 in the last 12 months?" questionNum="11.2" stateValue={this.state.isIncomeBelowCombinedLimit}
+        <QuestionYesNo question="Is your household income (including the person you are buying the house with) below $130,000 in the last 12 months?" questionNum="12.2" stateValue={this.state.isIncomeBelowCombinedLimit}
           callback={
             (answer) => {
               this.setState({isIncomeBelowCombinedLimit : answer})
@@ -350,9 +379,10 @@ export default class App extends React.Component {
     if (!this.state.isResident ||
       !this.state.hasKiwiSaverAcc ||
       (this.state.ownedHouse !== false) ||
-      (this.state.intendToLive === null) ||
+      !this.state.intendToLive ||
       !this.state.hasKiwiSaverThreeYears ||
       (this.state.contributeThreeYears  === null) ||
+      (this.state.hasReceivedGrant !== false) ||
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) ||
       (this.state.isBuyingAsIndividual !== true) ||
@@ -362,7 +392,7 @@ export default class App extends React.Component {
 
     return (
       <QuestionValue question="How much do you have saved in cash?"
-        questionNum="12.1" preLabel="$"
+        questionNum="13.1" preLabel="$"
         callbackUpdate={
           (value) => {
             this.state.singleSaving = Number(value)
@@ -381,9 +411,10 @@ export default class App extends React.Component {
     if (!this.state.isResident ||
       !this.state.hasKiwiSaverAcc ||
       (this.state.ownedHouse !== false) ||
-      (this.state.intendToLive === null) ||
+      !this.state.intendToLive ||
       !this.state.hasKiwiSaverThreeYears ||
       (this.state.contributeThreeYears  === null) ||
+      (this.state.hasReceivedGrant !== false) ||
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) ||
       (this.state.isBuyingAsIndividual !== true) ||
@@ -394,7 +425,7 @@ export default class App extends React.Component {
 
     return (
       <QuestionValue question="How much do you have in your KiwiSaver account now?"
-        questionNum="13.1" preLabel="$"
+        questionNum="14.1" preLabel="$"
         callbackUpdate={
           (value) => {
             this.state.singleKiwiSaverAmount = Number(value)
@@ -413,9 +444,10 @@ export default class App extends React.Component {
     if (!this.state.isResident ||
       !this.state.hasKiwiSaverAcc ||
       (this.state.ownedHouse !== false) ||
-      (this.state.intendToLive === null) ||
+      !this.state.intendToLive ||
       !this.state.hasKiwiSaverThreeYears ||
       (this.state.contributeThreeYears  === null) ||
+      (this.state.hasReceivedGrant !== false) ||
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) ||
       (this.state.isBuyingAsIndividual !== false) ||
@@ -425,7 +457,7 @@ export default class App extends React.Component {
 
     return (
       <QuestionValue question="How much do you and your co-buyers have saved in cash?"
-        questionNum="12.2" preLabel="$"
+        questionNum="13.2" preLabel="$"
         callbackUpdate={
           (value) => {
             this.state.doubleSaving = Number(value)
@@ -444,9 +476,10 @@ export default class App extends React.Component {
     if (!this.state.isResident ||
       !this.state.hasKiwiSaverAcc ||
       (this.state.ownedHouse !== false) ||
-      (this.state.intendToLive === null) ||
+      !this.state.intendToLive ||
       !this.state.hasKiwiSaverThreeYears ||
       (this.state.contributeThreeYears  === null) ||
+      (this.state.hasReceivedGrant !== false) ||
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) ||
       (this.state.isBuyingAsIndividual !== false) ||
@@ -457,7 +490,7 @@ export default class App extends React.Component {
 
     return (
       <QuestionValue question="How much do you and your co-buyers have in both KiwiSaver account now?"
-        questionNum="13.2" preLabel="$"
+        questionNum="14.2" preLabel="$"
         callbackUpdate={
           (value) => {
             this.state.doubleKiwiSaverAmount = Number(value)
@@ -510,7 +543,7 @@ export default class App extends React.Component {
 
     if (this.state.intendToLive === false) {
       return (
-        <IneligibleMessage message="You must be intended to live at the house. May eligible for exemption" isWarning={true} />
+        <IneligibleMessage message="You must be intended to live at the house. May eligible for exemption" />
       )
     }
 
@@ -518,7 +551,7 @@ export default class App extends React.Component {
 
   msgNeedThreeYearsKiwiSaver() {
     if (!this.state.isResident || !this.state.hasKiwiSaverAcc || 
-        (this.state.ownedHouse === true) || (this.state.intendToLive === null)) {
+        (this.state.ownedHouse === true) || !this.state.intendToLive) {
       return
     }
 
@@ -543,9 +576,24 @@ export default class App extends React.Component {
     }
   }
 
+  msgMustNotReceivedGrant() {
+    if (!this.state.isResident || !this.state.hasKiwiSaverAcc || 
+      (this.state.ownedHouse === true) || !this.state.intendToLive ||
+      !this.state.hasKiwiSaverThreeYears || 
+      (this.state.hasReceivedGrant === null)) {
+      return
+    }
+
+    if (this.state.hasReceivedGrant === true) {
+      return (
+        <IneligibleMessage message="You are no longer eligible for HomeStart Grant and KiwiSaver withdrawal."/>
+      )
+    }
+  }
+
   msgOverHousePriceLimit() {
     if (!this.state.isResident || !this.state.hasKiwiSaverAcc || 
-      (this.state.ownedHouse === true) || (this.state.intendToLive === null) ||
+      (this.state.ownedHouse === true) || !this.state.intendToLive ||
       !this.state.hasKiwiSaverThreeYears || (this.state.contributeThreeYears  === null)
     ) {
       return
@@ -560,7 +608,7 @@ export default class App extends React.Component {
 
   msgSingleIncomeTooHigh() {
     if (!this.state.isResident || !this.state.hasKiwiSaverAcc || 
-      (this.state.ownedHouse === true) || (this.state.intendToLive === null) ||
+      (this.state.ownedHouse === true) || !this.state.intendToLive ||
       !this.state.hasKiwiSaverThreeYears || (this.state.contributeThreeYears  === null) ||
       this.state.isBuyingAsIndividual !== true) {
       return
@@ -575,7 +623,7 @@ export default class App extends React.Component {
   
   msgCombinedIncomeTooHigh() {
     if (!this.state.isResident || !this.state.hasKiwiSaverAcc || 
-      (this.state.ownedHouse === true) || (this.state.intendToLive === null) ||
+      (this.state.ownedHouse === true) || !this.state.intendToLive ||
       !this.state.hasKiwiSaverThreeYears || (this.state.contributeThreeYears  === null) ||
       this.state.isBuyingAsIndividual !== false) {
       return
@@ -599,6 +647,7 @@ export default class App extends React.Component {
         { this.showIntendToLiveQuestion() }
         { this.showKiwiSaverDurationQuestion() }
         { this.showKiwiSaverContributeQuestion() }
+        { this.showReceivedGrantQuestion() }
         { this.showHouseLocationQuestion() }
         { this.showHousePriceQuestion() }
         { this.showNewHouseQuestion() }
