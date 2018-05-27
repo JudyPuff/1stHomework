@@ -94,8 +94,8 @@ export default class App extends React.Component {
 
   showIntendToLiveQuestion() {
     if (!this.state.isResident ||
-      !this.state.hasKiwiSaverAcc ||
-      (this.state.ownedHouse !== false) ) return
+        !this.state.hasKiwiSaverAcc ||
+        (this.state.ownedHouse !== false) ) return
 
       return (
         <div>
@@ -116,7 +116,7 @@ export default class App extends React.Component {
     if (!this.state.isResident ||
         !this.state.hasKiwiSaverAcc ||
         (this.state.ownedHouse !== false) ||
-        !this.state.intendToLive ) return
+        (this.state.intendToLive === null)) return
 
     return (
       <div>
@@ -134,10 +134,10 @@ export default class App extends React.Component {
 
   showKiwiSaverContributeQuestion() {
     if (!this.state.isResident ||
-      !this.state.hasKiwiSaverAcc ||
-      (this.state.ownedHouse !== false) ||
-      !this.state.intendToLive ||
-      !this.state.hasKiwiSaverThreeYears ) return
+        !this.state.hasKiwiSaverAcc ||
+        (this.state.ownedHouse !== false) ||
+        (this.state.intendToLive === null) ||
+        !this.state.hasKiwiSaverThreeYears ) return
 
     return (
       <div>
@@ -166,11 +166,11 @@ export default class App extends React.Component {
 
   showHouseLocationQuestion() {
     if (!this.state.isResident ||
-      !this.state.hasKiwiSaverAcc ||
-      (this.state.ownedHouse !== false) ||
-       !this.state.intendToLive ||
-       !this.state.hasKiwiSaverThreeYears ||
-       !this.state.contributeThreeYears) return
+        !this.state.hasKiwiSaverAcc ||
+        (this.state.ownedHouse !== false) ||
+        (this.state.intendToLive === null) ||
+        !this.state.hasKiwiSaverThreeYears ||
+        (this.state.contributeThreeYears === null)) return
 
       const questionNum = 7
       const questionIdentifier = "question-" + questionNum
@@ -216,9 +216,9 @@ export default class App extends React.Component {
     if (!this.state.isResident ||
        !this.state.hasKiwiSaverAcc ||
        (this.state.ownedHouse !== false) ||
-       !this.state.intendToLive ||
+       (this.state.intendToLive === null) ||
        !this.state.hasKiwiSaverThreeYears ||
-       !this.state.contributeThreeYears ||
+       (this.state.contributeThreeYears  === null) ||
        (this.state.buyingLocation <= 0)
       ) return
 
@@ -250,9 +250,9 @@ export default class App extends React.Component {
     if (!this.state.isResident ||
       !this.state.hasKiwiSaverAcc ||
       (this.state.ownedHouse !== false) ||
-      !this.state.intendToLive ||
+      (this.state.intendToLive === null) ||
       !this.state.hasKiwiSaverThreeYears ||
-      !this.state.contributeThreeYears ||
+      (this.state.contributeThreeYears  === null) ||
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) 
      ) return
@@ -273,9 +273,9 @@ export default class App extends React.Component {
     if (!this.state.isResident ||
       !this.state.hasKiwiSaverAcc ||
       (this.state.ownedHouse !== false) ||
-      !this.state.intendToLive ||
+      (this.state.intendToLive === null) ||
       !this.state.hasKiwiSaverThreeYears ||
-      !this.state.contributeThreeYears ||
+      (this.state.contributeThreeYears  === null) ||
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) ||
       !this.repliedIsNewHouse
@@ -296,9 +296,9 @@ export default class App extends React.Component {
     if (!this.state.isResident ||
       !this.state.hasKiwiSaverAcc ||
       (this.state.ownedHouse !== false) ||
-      !this.state.intendToLive ||
+      (this.state.intendToLive === null) ||
       !this.state.hasKiwiSaverThreeYears ||
-      !this.state.contributeThreeYears ||
+      (this.state.contributeThreeYears  === null) ||
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) ||
       (this.state.isBuyingAsIndividual !== true) ||
@@ -323,9 +323,9 @@ export default class App extends React.Component {
     if (!this.state.isResident ||
       !this.state.hasKiwiSaverAcc ||
       (this.state.ownedHouse !== false) ||
-      !this.state.intendToLive ||
+      (this.state.intendToLive === null) ||
       !this.state.hasKiwiSaverThreeYears ||
-      !this.state.contributeThreeYears ||
+      (this.state.contributeThreeYears  === null) ||
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) ||
       (this.state.isBuyingAsIndividual !== false) ||
@@ -350,9 +350,9 @@ export default class App extends React.Component {
     if (!this.state.isResident ||
       !this.state.hasKiwiSaverAcc ||
       (this.state.ownedHouse !== false) ||
-      !this.state.intendToLive ||
+      (this.state.intendToLive === null) ||
       !this.state.hasKiwiSaverThreeYears ||
-      !this.state.contributeThreeYears ||
+      (this.state.contributeThreeYears  === null) ||
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) ||
       (this.state.isBuyingAsIndividual !== true) ||
@@ -381,9 +381,9 @@ export default class App extends React.Component {
     if (!this.state.isResident ||
       !this.state.hasKiwiSaverAcc ||
       (this.state.ownedHouse !== false) ||
-      !this.state.intendToLive ||
+      (this.state.intendToLive === null) ||
       !this.state.hasKiwiSaverThreeYears ||
-      !this.state.contributeThreeYears ||
+      (this.state.contributeThreeYears  === null) ||
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) ||
       (this.state.isBuyingAsIndividual !== true) ||
@@ -413,9 +413,9 @@ export default class App extends React.Component {
     if (!this.state.isResident ||
       !this.state.hasKiwiSaverAcc ||
       (this.state.ownedHouse !== false) ||
-      !this.state.intendToLive ||
+      (this.state.intendToLive === null) ||
       !this.state.hasKiwiSaverThreeYears ||
-      !this.state.contributeThreeYears ||
+      (this.state.contributeThreeYears  === null) ||
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) ||
       (this.state.isBuyingAsIndividual !== false) ||
@@ -444,9 +444,9 @@ export default class App extends React.Component {
     if (!this.state.isResident ||
       !this.state.hasKiwiSaverAcc ||
       (this.state.ownedHouse !== false) ||
-      !this.state.intendToLive ||
+      (this.state.intendToLive === null) ||
       !this.state.hasKiwiSaverThreeYears ||
-      !this.state.contributeThreeYears ||
+      (this.state.contributeThreeYears  === null) ||
       (this.state.buyingLocation <= 0) ||
       (this.state.isPriceOverLimit != false) ||
       (this.state.isBuyingAsIndividual !== false) ||
@@ -518,7 +518,7 @@ export default class App extends React.Component {
 
   msgNeedThreeYearsKiwiSaver() {
     if (!this.state.isResident || !this.state.hasKiwiSaverAcc || 
-        (this.state.ownedHouse === true) || !this.state.intendToLive) {
+        (this.state.ownedHouse === true) || (this.state.intendToLive === null)) {
       return
     }
 
@@ -531,7 +531,7 @@ export default class App extends React.Component {
 
   msgNeedContributeThreeYears() {
     if (!this.state.isResident || !this.state.hasKiwiSaverAcc || 
-      (this.state.ownedHouse === true) || !this.state.intendToLive ||
+      (this.state.ownedHouse === true) || (this.state.intendToLive === null) ||
       !this.state.hasKiwiSaverThreeYears) {
       return
     }
@@ -545,8 +545,8 @@ export default class App extends React.Component {
 
   msgOverHousePriceLimit() {
     if (!this.state.isResident || !this.state.hasKiwiSaverAcc || 
-      (this.state.ownedHouse === true) || !this.state.intendToLive ||
-      !this.state.hasKiwiSaverThreeYears || !this.state.contributeThreeYears
+      (this.state.ownedHouse === true) || (this.state.intendToLive === null) ||
+      !this.state.hasKiwiSaverThreeYears || (this.state.contributeThreeYears  === null)
     ) {
       return
     }
@@ -560,8 +560,8 @@ export default class App extends React.Component {
 
   msgSingleIncomeTooHigh() {
     if (!this.state.isResident || !this.state.hasKiwiSaverAcc || 
-      (this.state.ownedHouse === true) || !this.state.intendToLive ||
-      !this.state.hasKiwiSaverThreeYears || !this.state.contributeThreeYears ||
+      (this.state.ownedHouse === true) || (this.state.intendToLive === null) ||
+      !this.state.hasKiwiSaverThreeYears || (this.state.contributeThreeYears  === null) ||
       this.state.isBuyingAsIndividual !== true) {
       return
     }
@@ -575,8 +575,8 @@ export default class App extends React.Component {
   
   msgCombinedIncomeTooHigh() {
     if (!this.state.isResident || !this.state.hasKiwiSaverAcc || 
-      (this.state.ownedHouse === true) || !this.state.intendToLive ||
-      !this.state.hasKiwiSaverThreeYears || !this.state.contributeThreeYears ||
+      (this.state.ownedHouse === true) || (this.state.intendToLive === null) ||
+      !this.state.hasKiwiSaverThreeYears || (this.state.contributeThreeYears  === null) ||
       this.state.isBuyingAsIndividual !== false) {
       return
     }
