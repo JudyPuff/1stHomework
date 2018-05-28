@@ -29,10 +29,12 @@ export default class App extends React.Component {
       isIncomeBelowCombinedLimit: null,
       singleSaving: 0,
       doubleSaving: 0,
-      hasEnteredSingleSaving: null,
-      hasEnteredDoubleSaving: null,
+      hasEnteredSingleSaving: false,
+      hasEnteredDoubleSaving: false,
       singleKiwiSaverAmount: 0,
-      doubleKiwiSaverAmount: 0
+      doubleKiwiSaverAmount: 0,
+      hasEnteredSingleKiwiSaverAmount: false,
+      hasEnteredDoubleKiwiSaverAmount: false,
     }
 
     this.repliedIsNewHouse = false
@@ -433,7 +435,7 @@ export default class App extends React.Component {
         }
         callback={
           () => {
-            console.log("Single KS amount is: ", this.state.singleKiwiSaverAmount)
+            this.setState({hasEnteredSingleKiwiSaverAmount : true})
           }
         }
       />
@@ -498,10 +500,57 @@ export default class App extends React.Component {
         }
         callback={
           () => {
-            console.log("Double KS amount is: ", this.state.doubleKiwiSaverAmount)
+            this.setState({hasEnteredDoubleKiwiSaverAmount : true})
           }
         }
       />
+    )
+  }
+
+  showConclusion() {
+    if (!this.state.isResident ||
+      !this.state.hasKiwiSaverAcc ||
+      (this.state.ownedHouse !== false) ||
+      !this.state.intendToLive ||
+      !this.state.hasKiwiSaverThreeYears ||
+      (this.state.contributeThreeYears  === null) ||
+      (this.state.hasReceivedGrant !== false) ||
+      (this.state.buyingLocation <= 0) ||
+      (this.state.isPriceOverLimit != false) ||
+      !this.repliedIsNewHouse
+     ) return
+
+      if (this.state.isBuyingAsIndividual === true) {
+        return (this.showSingleBuyerConclusion())
+      } else if (this.state.isBuyingAsIndividual === false) {
+        return (this.showCombinedBuyersConclusion())
+      }
+
+  }
+
+  showSingleBuyerConclusion() {
+    if ((this.state.isIncomeBelowSingleLimit != true) ||
+        !this.state.hasEnteredSingleSaving || 
+        !this.state.hasEnteredSingleKiwiSaverAmount )
+        return
+      
+    return (
+      <div className="container mt-4 bg-primary">
+        <div>House Price: {this.state.housePrice}</div>
+      </div>
+    )
+  }
+
+  showCombinedBuyersConclusion() {
+    if ((this.state.isIncomeBelowCombinedLimit !== true) ||
+        !this.state.hasEnteredDoubleSaving ||
+        !this.state.hasEnteredDoubleKiwiSaverAmount )
+        return
+
+    return (
+      <div className="container mt-4 bg-primary">
+        <div>House Price: {this.state.housePrice}</div>
+      </div>
     )
   }
 
@@ -658,6 +707,7 @@ export default class App extends React.Component {
         { this.showSingleKiwiSaverAmountQuestion() }
         { this.showCombinedSavingQuestion() }
         { this.showDoubleKiwiSaverAmountQuestion() }
+        { this.showConclusion() }
       </div>
     )
   }
