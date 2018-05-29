@@ -3,7 +3,7 @@
 let years_in_ks = []
 
 
-function calcHomeStartGrant(numYearsContributed, isNewHouse) {
+export function calcHomeStartGrant(numYearsContributed, isNewHouse) {
   if (numYearsContributed < 3) {
     return 0 
   }

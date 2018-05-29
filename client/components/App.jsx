@@ -1,10 +1,16 @@
 import React from 'react'
+import {calcHomeStartGrant} from '../payability.js'
 
 import Header from './Header'
 import QuestionYesNo from './QuestionYesNo'
 import IneligibleMessage from './IneligibleMessage'
 import RadioChoice from './RadioChoice'
 import QuestionValue from './QuestionValue'
+
+
+const numberWithCommas = (x) => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 export default class App extends React.Component {
   constructor(props) {
@@ -535,8 +541,15 @@ export default class App extends React.Component {
         return
       
     return (
-      <div className="container mt-4 bg-primary">
-        <div>House Price: {this.state.housePrice}</div>
+      <div className="container mt-4 bg-primary text-light">
+        <div>SINGLE Purchase</div>
+        <div>House Price: ${numberWithCommas(this.state.housePrice)}</div>
+        <p />
+        <div>Personal Saving: ${numberWithCommas(this.state.singleSaving)}</div>
+        <div>KiwiSaver Saving:${numberWithCommas(this.state.singleKiwiSaverAmount)}</div>
+        <div>HomeStart Grant: ${numberWithCommas(calcHomeStartGrant(this.state.numYearsContributeKiwiSaver, 
+          this.state.isNewHouse))}</div>
+        <p />
       </div>
     )
   }
@@ -548,8 +561,13 @@ export default class App extends React.Component {
         return
 
     return (
-      <div className="container mt-4 bg-primary">
-        <div>House Price: {this.state.housePrice}</div>
+      <div className="container mt-4 bg-primary text-light">
+        <div>COMBINED Purchase</div>
+        <div>House Price: ${numberWithCommas(this.state.housePrice)}</div>
+        <p />
+        <div>Combined Saving: ${numberWithCommas(this.state.doubleSaving)}</div>
+        <div>Combined KiwiSaver Saving: ${numberWithCommas(this.state.doubleKiwiSaverAmount)}</div>
+        <div>HomeStart Grant: ${numberWithCommas(calcHomeStartGrant(this.state.numYearsContributeKiwiSaver, this.state.isNewHouse))}</div>
       </div>
     )
   }
