@@ -541,7 +541,7 @@ export default class App extends React.Component {
         return
       
     return (
-      <div className="container mt-4 bg-primary text-light">
+      <div className="container mt-5 bg-primary text-light">
         <div>SINGLE Purchase</div>
         <div>House Price: ${numberWithCommas(this.state.housePrice)}</div>
         <p />
@@ -561,7 +561,7 @@ export default class App extends React.Component {
         return
 
     return (
-      <div className="container mt-4 bg-primary text-light">
+      <div className="container mt-5 bg-primary text-light">
         <div>COMBINED Purchase</div>
         <div>House Price: ${numberWithCommas(this.state.housePrice)}</div>
         <p />
