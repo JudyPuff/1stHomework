@@ -598,7 +598,7 @@ export default class App extends React.Component {
           <div className="pl-4">10% of House price: {formatNumberOnMoney(this.state.housePrice * 0.1)}</div>
           <div className="pl-4">20% of House price: {formatNumberOnMoney(this.state.housePrice * 0.2)}</div>
           <p />
-          <div>Total Saving (saving + KiwiStart + HomeStart Grant): {formatNumberOnMoney(totalSaving)}</div>
+          <div>Total Saving (saving + KiwiSaver + HomeStart Grant): {formatNumberOnMoney(totalSaving)}</div>
           <div className="pl-4">Personal Saving: {formatNumberOnMoney(this.state.singleSaving)}</div>
           <div className="pl-4">Personal KiwiSaver: {formatNumberOnMoney(this.state.singleKiwiSaverAmount)}</div>
           <div className="pl-4">HomeStart Grant: {formatNumberOnMoney(homeStartGrant)}</div>
@@ -628,7 +628,7 @@ export default class App extends React.Component {
           <div className="pl-4">10% of House price: {formatNumberOnMoney(this.state.housePrice * 0.1)}</div>
           <div className="pl-4">20% of House price: {formatNumberOnMoney(this.state.housePrice * 0.2)}</div>
           <p />
-          <div>Total Saving (saving + KiwiStart + HomeStart Grant): {formatNumberOnMoney(totalSaving)}</div>
+          <div>Total Saving (saving + KiwiSaver + HomeStart Grant): {formatNumberOnMoney(totalSaving)}</div>
           <div className="pl-4">Combined Saving: {formatNumberOnMoney(this.state.doubleSaving)}</div>
           <div className="pl-4">Combined KiwiSaver: {formatNumberOnMoney(this.state.doubleKiwiSaverAmount)}</div>
           <div className="pl-4">HomeStart Grant: {formatNumberOnMoney(homeStartGrant)}</div>
