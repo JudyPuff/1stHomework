@@ -1,4 +1,3 @@
-
 export function numberWithCommas(num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -17,7 +16,7 @@ function zeroNegativeNum(num) {
 
 export function calcHomeStartGrant(numYearsContributed, isNewHouse) {
   if (numYearsContributed < 3) {
-    return 0 
+    return 0
   }
 
   let baseGrantPerYear = 1000
@@ -46,4 +45,3 @@ export function eligibleBankLoan(purchasePrice, totalSaving) {
 
   return (totalSaving > min)
 }
-
