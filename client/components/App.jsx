@@ -12,6 +12,13 @@ const numberWithCommas = (x) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+const formatNumberOnMoney = (x) => {
+  if (x < 0) {
+    x = 0
+  }
+  return "$" + numberWithCommas(Math.floor(x))
+}
+
 export default class App extends React.Component {
   constructor(props) {
     super(props)
@@ -183,7 +190,7 @@ export default class App extends React.Component {
 
   return (
     <div>
-      <QuestionYesNo question="Did you received  KiwiSaver HomeStart grant or KiwiSaver deposit subsidy before?"
+      <QuestionYesNo question="Did you receive KiwiSaver HomeStart grant or KiwiSaver deposit subsidy before?"
         questionNum="7" stateValue={this.state.hasReceivedGrant}
         callback={
           (answer) => {
@@ -540,16 +547,22 @@ export default class App extends React.Component {
         !this.state.hasEnteredSingleKiwiSaverAmount )
         return
       
+    let homeStartGrant = calcHomeStartGrant(this.state.numYearsContributeKiwiSaver, 
+      this.state.isNewHouse)
+    let totalSaving = this.state.singleSaving + this.state.singleKiwiSaverAmount + homeStartGrant
+
     return (
       <div className="container mt-5 bg-primary text-light">
         <div>SINGLE Purchase</div>
-        <div>House Price: ${numberWithCommas(this.state.housePrice)}</div>
+        <div>House Price: {formatNumberOnMoney(this.state.housePrice)}</div>
+        <div>10% of House price: {formatNumberOnMoney(this.state.housePrice * 0.1)}</div>
+        <div>20% of House price: {formatNumberOnMoney(this.state.housePrice * 0.2)}</div>
         <p />
-        <div>Personal Saving: ${numberWithCommas(this.state.singleSaving)}</div>
-        <div>KiwiSaver Saving:${numberWithCommas(this.state.singleKiwiSaverAmount)}</div>
-        <div>HomeStart Grant: ${numberWithCommas(calcHomeStartGrant(this.state.numYearsContributeKiwiSaver, 
-          this.state.isNewHouse))}</div>
+        <div>Personal Saving: {formatNumberOnMoney(this.state.singleSaving)}</div>
+        <div>Personal KiwiSaver: {formatNumberOnMoney(this.state.singleKiwiSaverAmount)}</div>
+        <div>HomeStart Grant: {formatNumberOnMoney(homeStartGrant)}</div>
         <p />
+        <div>Total Saving (saving + KiwiStart + HomeStart Grant): {formatNumberOnMoney(totalSaving)}</div>
       </div>
     )
   }
@@ -560,14 +573,22 @@ export default class App extends React.Component {
         !this.state.hasEnteredDoubleKiwiSaverAmount )
         return
 
+    let homeStartGrant = calcHomeStartGrant(this.state.numYearsContributeKiwiSaver, 
+          this.state.isNewHouse)
+    let totalSaving = this.state.doubleSaving + this.state.doubleKiwiSaverAmount + homeStartGrant
+
     return (
       <div className="container mt-5 bg-primary text-light">
         <div>COMBINED Purchase</div>
-        <div>House Price: ${numberWithCommas(this.state.housePrice)}</div>
+        <div>House Price: {formatNumberOnMoney(this.state.housePrice)}</div>
+        <div>10% of House price: {formatNumberOnMoney(this.state.housePrice * 0.1)}</div>
+        <div>20% of House price: {formatNumberOnMoney(this.state.housePrice * 0.2)}</div>
         <p />
-        <div>Combined Saving: ${numberWithCommas(this.state.doubleSaving)}</div>
-        <div>Combined KiwiSaver Saving: ${numberWithCommas(this.state.doubleKiwiSaverAmount)}</div>
-        <div>HomeStart Grant: ${numberWithCommas(calcHomeStartGrant(this.state.numYearsContributeKiwiSaver, this.state.isNewHouse))}</div>
+        <div>Combined Saving: {formatNumberOnMoney(this.state.doubleSaving)}</div>
+        <div>Combined KiwiSaver: {formatNumberOnMoney(this.state.doubleKiwiSaverAmount)}</div>
+        <div>HomeStart Grant: {formatNumberOnMoney(homeStartGrant)}</div>
+        <p />
+        <div>Total Saving (saving + KiwiStart + HomeStart Grant): {formatNumberOnMoney(totalSaving)}</div>
       </div>
     )
   }
