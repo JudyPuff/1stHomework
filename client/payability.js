@@ -34,14 +34,18 @@ export function calcHomeStartGrant(numYearsContributed, isNewHouse) {
 
 }
 
+export function calcTotalSaving(saving, kiwiSaver, HomeStart) {
+  return saving + kiwiSaver + HomeStart
+}
+
 export function eligibleHomeStart(purchasePrice, totalSaving) {
   let min = Math.floor(purchasePrice * 0.1)
 
-  return (totalSaving > min)
+  return (totalSaving >= min)
 }
 
 export function eligibleBankLoan(purchasePrice, totalSaving) {
   let min = Math.floor(purchasePrice * 0.2)
 
-  return (totalSaving > min)
+  return (totalSaving >= min)
 }

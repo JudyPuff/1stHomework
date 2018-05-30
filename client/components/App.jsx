@@ -3,6 +3,7 @@ import {
   numberWithCommas,
   formatNumberOnMoney,
   calcHomeStartGrant,
+  calcTotalSaving,
   eligibleHomeStart,
   eligibleBankLoan
 } from '../payability.js'
@@ -587,7 +588,7 @@ export default class App extends React.Component {
 
     let homeStartGrant = calcHomeStartGrant(this.state.numYearsContributeKiwiSaver,
       this.state.isNewHouse)
-    let totalSaving = this.state.singleSaving + this.state.singleKiwiSaverAmount + homeStartGrant
+    let totalSaving = calcTotalSaving(this.state.singleSaving, this.state.singleKiwiSaverAmount, homeStartGrant)
 
     return (
       <ScrollableAnchor id='conclusion'>
@@ -617,7 +618,7 @@ export default class App extends React.Component {
 
     let homeStartGrant = calcHomeStartGrant(this.state.numYearsContributeKiwiSaver,
       this.state.isNewHouse)
-    let totalSaving = this.state.doubleSaving + this.state.doubleKiwiSaverAmount + homeStartGrant
+    let totalSaving = calcTotalSaving(this.state.doubleSaving, this.state.doubleKiwiSaverAmount, homeStartGrant)
 
     return (
       <ScrollableAnchor id='conclusion'>
@@ -641,7 +642,7 @@ export default class App extends React.Component {
   }
 
   showEligibleHomeStartGrantMessage(purchasePrice, totalSaving) {
-    if (eligibleHomeStart(this.state.housePrice, totalSaving)) {
+    if (eligibleHomeStart(purchasePrice, totalSaving)) {
       return (<div className="p-2 m-2 rounded bg-light text-success">You are eligible for HomeStart Grant, because your total savings exceed the required 10% of the house price</div>)
     } else {
       return (<div className="p-2 m-2 rounded bg-light text-danger">You are NOT eligible for HomeStart Grant, because your total savings does not meet the required 10% of the house price</div>)
@@ -650,7 +651,7 @@ export default class App extends React.Component {
   }
 
   showEligibleBankLoanMessage(purchasePrice, totalSaving) {
-    if (eligibleBankLoan(this.state.purchasePrice, totalSaving)) {
+    if (eligibleBankLoan(purchasePrice, totalSaving)) {
       return (<div className="p-2 m-2 rounded bg-light text-success">You are eligible for a Home Loan from a bank, because your total saving exceed the required 20% to pay the deposit</div>)
     } else {
       return (<div className="p-2 m-2 rounded bg-light text-danger">You are NOT eligible for a Home Loan from a bank, because your total saving does not meet the required 20% to pay the deposit</div>)

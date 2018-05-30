@@ -12,7 +12,7 @@ export default function QuestionValue(props) {
       <div className="container mt-4">
         <h4>{props.questionNum}. {props.question}</h4>
         <span className="ml-4">{props.preLabel}</span>
-        <input type="number" min="0" defaultValue={0} name="questionIdentifier" onChange={(e) => {
+        <input type="number" min={0} defaultValue={0} name="questionIdentifier" onChange={(e) => {
           props.callbackUpdate(e.target.value)
         }} />
         <span className="ml-2">{props.postLabel}</span>
