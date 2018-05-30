@@ -6,12 +6,14 @@ import {
   eligibleHomeStart,
   eligibleBankLoan
 } from '../payability.js'
-
+import ScrollableAnchor, { configureAnchors, goToAnchor } from 'react-scrollable-anchor'
 import Header from './Header'
 import QuestionYesNo from './QuestionYesNo'
 import IneligibleMessage from './IneligibleMessage'
 import RadioChoice from './RadioChoice'
 import QuestionValue from './QuestionValue'
+
+configureAnchors({ offset: 0, scrollDuration: 0 })
 
 export default class App extends React.Component {
   constructor(props) {
@@ -59,6 +61,7 @@ export default class App extends React.Component {
           questionNum="1" stateValue={this.state.isResident} callback={
             (answer) => {
               this.setState({ isResident: answer })
+              goToAnchor('Q-1')
             }
           }
         />
@@ -76,6 +79,7 @@ export default class App extends React.Component {
           questionNum="2" stateValue={this.state.hasKiwiSaverAcc} callback={
             (answer) => {
               this.setState({ hasKiwiSaverAcc: answer })
+              goToAnchor('Q-2')
             }
           }
         />
@@ -94,6 +98,7 @@ export default class App extends React.Component {
           questionNum="3" stateValue={this.state.ownedHouse} callback={
             (answer) => {
               this.setState({ ownedHouse: answer })
+              goToAnchor('Q-3')
             }
           }
         />
@@ -114,6 +119,7 @@ export default class App extends React.Component {
           callback={
             (answer) => {
               this.setState({ intendToLive: answer })
+              goToAnchor('Q-4')
             }
           }
         />
@@ -134,6 +140,7 @@ export default class App extends React.Component {
           callback={
             (answer) => {
               this.setState({ hasKiwiSaverThreeYears: answer })
+              goToAnchor('Q-5')
             }
           }
         />
@@ -166,6 +173,7 @@ export default class App extends React.Component {
                 isMoreThanThreeYears = true
               }
               this.setState({ contributeThreeYears: isMoreThanThreeYears })
+              goToAnchor('Q-6')
             }
           }
         />
@@ -189,6 +197,7 @@ export default class App extends React.Component {
           callback={
             (answer) => {
               this.setState({ hasReceivedGrant: answer })
+              goToAnchor('Q-7')
             }
           }
         />
@@ -213,24 +222,26 @@ export default class App extends React.Component {
     const stateValue = this.state.buyingLocation
 
     return (
-      <form className="container mt-4">
-        <h4>{questionNum}. Where do you intend to buy your house</h4>
-        <RadioChoice identifier={questionIdentifier} radioValue={1}
-          radioValueStr="1" stateValue={stateValue}
-          label={location1}
-          callback={this.updateBuyingLocation}
-        />
-        <RadioChoice identifier={questionIdentifier} radioValue={2}
-          radioValueStr="2" stateValue={stateValue}
-          label={location2}
-          callback={this.updateBuyingLocation}
-        />
-        <RadioChoice identifier={questionIdentifier} radioValue={3}
-          radioValueStr="3" stateValue={stateValue}
-          label={location3}
-          callback={this.updateBuyingLocation}
-        />
-      </form>
+      <ScrollableAnchor id='Q-8'>
+        <form className="container mt-4">
+          <h4>{questionNum}. Where do you intend to buy your house</h4>
+          <RadioChoice identifier={questionIdentifier} radioValue={1}
+            radioValueStr="1" stateValue={stateValue}
+            label={location1}
+            callback={this.updateBuyingLocation}
+          />
+          <RadioChoice identifier={questionIdentifier} radioValue={2}
+            radioValueStr="2" stateValue={stateValue}
+            label={location2}
+            callback={this.updateBuyingLocation}
+          />
+          <RadioChoice identifier={questionIdentifier} radioValue={3}
+            radioValueStr="3" stateValue={stateValue}
+            label={location3}
+            callback={this.updateBuyingLocation}
+          />
+        </form>
+      </ScrollableAnchor>
     )
   }
 
@@ -243,6 +254,7 @@ export default class App extends React.Component {
       this.state.housePriceLimit = 400000
     }
     this.setState({ buyingLocation: answer })
+    goToAnchor('Q-8')
   }
 
   showHousePriceQuestion() {
@@ -272,6 +284,7 @@ export default class App extends React.Component {
                 isOverLimit = true
               }
               this.setState({ isPriceOverLimit: isOverLimit })
+              goToAnchor('Q-9')
             }
           }
         />
@@ -298,6 +311,7 @@ export default class App extends React.Component {
           (answer) => {
             this.setState({ isNewHouse: answer })
             this.repliedIsNewHouse = true;
+            goToAnchor('Q-10')
           }
         }
       />
@@ -322,6 +336,7 @@ export default class App extends React.Component {
         callback={
           (answer) => {
             this.setState({ isBuyingAsIndividual: answer })
+            goToAnchor('Q-11')
           }
         }
       />
@@ -348,6 +363,7 @@ export default class App extends React.Component {
           callback={
             (answer) => {
               this.setState({ isIncomeBelowSingleLimit: answer })
+              goToAnchor('Q-12.1')
             }
           }
         />
@@ -376,6 +392,7 @@ export default class App extends React.Component {
           callback={
             (answer) => {
               this.setState({ isIncomeBelowCombinedLimit: answer })
+              goToAnchor('Q-12.2')
             }
           }
         />
@@ -410,6 +427,7 @@ export default class App extends React.Component {
         callback={
           () => {
             this.setState({ hasEnteredSingleSaving: true })
+            goToAnchor('Q-13.1')
           }
         }
       />
@@ -443,6 +461,7 @@ export default class App extends React.Component {
         callback={
           () => {
             this.setState({ hasEnteredSingleKiwiSaverAmount: true })
+            goToAnchor('conclusion')
           }
         }
       />
@@ -475,6 +494,7 @@ export default class App extends React.Component {
         callback={
           () => {
             this.setState({ hasEnteredDoubleSaving: true })
+            goToAnchor('Q-13.2')
           }
         }
       />
@@ -508,6 +528,7 @@ export default class App extends React.Component {
         callback={
           () => {
             this.setState({ hasEnteredDoubleKiwiSaverAmount: true })
+            goToAnchor('conclusion')
           }
         }
       />
@@ -546,20 +567,22 @@ export default class App extends React.Component {
     let totalSaving = this.state.singleSaving + this.state.singleKiwiSaverAmount + homeStartGrant
 
     return (
-      <div className="container mt-5 p-2 rounded bg-primary text-light">
-        <div className="text-center mb-2">SINGLE Purchase</div>
-        <div>House Price: {formatNumberOnMoney(this.state.housePrice)}</div>
-        <div className="pl-4">10% of House price: {formatNumberOnMoney(this.state.housePrice * 0.1)}</div>
-        <div className="pl-4">20% of House price: {formatNumberOnMoney(this.state.housePrice * 0.2)}</div>
-        <p />
-        <div>Total Saving (saving + KiwiStart + HomeStart Grant): {formatNumberOnMoney(totalSaving)}</div>
-        <div className="pl-4">Personal Saving: {formatNumberOnMoney(this.state.singleSaving)}</div>
-        <div className="pl-4">Personal KiwiSaver: {formatNumberOnMoney(this.state.singleKiwiSaverAmount)}</div>
-        <div className="pl-4">HomeStart Grant: {formatNumberOnMoney(homeStartGrant)}</div>
-        <p />
-        {this.showEligibleHomeStartGrantMessage(this.state.housePrice, totalSaving)}
-        {this.showEligibleBankLoanMessage(this.state.housePrice, totalSaving)}
-      </div>
+      <ScrollableAnchor id='conclusion'>
+        <div className="container mt-5 p-2 rounded bg-primary text-light">
+          <div className="text-center mb-2">SINGLE Purchase</div>
+          <div>House Price: {formatNumberOnMoney(this.state.housePrice)}</div>
+          <div className="pl-4">10% of House price: {formatNumberOnMoney(this.state.housePrice * 0.1)}</div>
+          <div className="pl-4">20% of House price: {formatNumberOnMoney(this.state.housePrice * 0.2)}</div>
+          <p />
+          <div>Total Saving (saving + KiwiStart + HomeStart Grant): {formatNumberOnMoney(totalSaving)}</div>
+          <div className="pl-4">Personal Saving: {formatNumberOnMoney(this.state.singleSaving)}</div>
+          <div className="pl-4">Personal KiwiSaver: {formatNumberOnMoney(this.state.singleKiwiSaverAmount)}</div>
+          <div className="pl-4">HomeStart Grant: {formatNumberOnMoney(homeStartGrant)}</div>
+          <p />
+          {this.showEligibleHomeStartGrantMessage(this.state.housePrice, totalSaving)}
+          {this.showEligibleBankLoanMessage(this.state.housePrice, totalSaving)}
+        </div>
+      </ScrollableAnchor>
     )
   }
 
@@ -574,21 +597,23 @@ export default class App extends React.Component {
     let totalSaving = this.state.doubleSaving + this.state.doubleKiwiSaverAmount + homeStartGrant
 
     return (
-      <div className="container mt-5 p-2 rounded bg-primary text-light">
-        <div className="text-center mb-2">COMBINED Purchase</div>
-        <div>House Price: {formatNumberOnMoney(this.state.housePrice)}</div>
-        <div className="pl-4">10% of House price: {formatNumberOnMoney(this.state.housePrice * 0.1)}</div>
-        <div className="pl-4">20% of House price: {formatNumberOnMoney(this.state.housePrice * 0.2)}</div>
-        <p />
-        <div>Total Saving (saving + KiwiStart + HomeStart Grant): {formatNumberOnMoney(totalSaving)}</div>
-        <div className="pl-4">Combined Saving: {formatNumberOnMoney(this.state.doubleSaving)}</div>
-        <div className="pl-4">Combined KiwiSaver: {formatNumberOnMoney(this.state.doubleKiwiSaverAmount)}</div>
-        <div className="pl-4">HomeStart Grant: {formatNumberOnMoney(homeStartGrant)}</div>
-        <p />
-        {this.showEligibleHomeStartGrantMessage(this.state.housePrice, totalSaving)}
-        {this.showEligibleBankLoanMessage(this.state.housePrice, totalSaving)}
+      <ScrollableAnchor id='conclusion'>
+        <div className="container mt-5 p-2 rounded bg-primary text-light">
+          <div className="text-center mb-2">COMBINED Purchase</div>
+          <div>House Price: {formatNumberOnMoney(this.state.housePrice)}</div>
+          <div className="pl-4">10% of House price: {formatNumberOnMoney(this.state.housePrice * 0.1)}</div>
+          <div className="pl-4">20% of House price: {formatNumberOnMoney(this.state.housePrice * 0.2)}</div>
+          <p />
+          <div>Total Saving (saving + KiwiStart + HomeStart Grant): {formatNumberOnMoney(totalSaving)}</div>
+          <div className="pl-4">Combined Saving: {formatNumberOnMoney(this.state.doubleSaving)}</div>
+          <div className="pl-4">Combined KiwiSaver: {formatNumberOnMoney(this.state.doubleKiwiSaverAmount)}</div>
+          <div className="pl-4">HomeStart Grant: {formatNumberOnMoney(homeStartGrant)}</div>
+          <p />
+          {this.showEligibleHomeStartGrantMessage(this.state.housePrice, totalSaving)}
+          {this.showEligibleBankLoanMessage(this.state.housePrice, totalSaving)}
 
-      </div>
+        </div>
+      </ScrollableAnchor>
     )
   }
 
@@ -759,8 +784,8 @@ export default class App extends React.Component {
         {this.showSingleIncomeQuestion()}
         {this.showCombinedIncomeQuestion()}
         {this.showSingleSavingQuestion()}
-        {this.showSingleKiwiSaverAmountQuestion()}
         {this.showCombinedSavingQuestion()}
+        {this.showSingleKiwiSaverAmountQuestion()}
         {this.showDoubleKiwiSaverAmountQuestion()}
         {this.showConclusion()}
       </div>
