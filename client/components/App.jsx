@@ -6,14 +6,16 @@ import {
   eligibleHomeStart,
   eligibleBankLoan
 } from '../payability.js'
-import ScrollableAnchor, { configureAnchors, goToAnchor } from 'react-scrollable-anchor'
+import ScrollableAnchor, 
+  { configureAnchors, goToAnchor, removeHash } from 'react-scrollable-anchor'
 import Header from './Header'
 import QuestionYesNo from './QuestionYesNo'
 import IneligibleMessage from './IneligibleMessage'
 import RadioChoice from './RadioChoice'
 import QuestionValue from './QuestionValue'
 
-configureAnchors({ offset: 0, scrollDuration: 0 })
+const scrollTiming = 700
+configureAnchors({ offset: 20, scrollDuration: scrollTiming })
 
 export default class App extends React.Component {
   constructor(props) {
@@ -47,12 +49,33 @@ export default class App extends React.Component {
     }
 
     this.repliedIsNewHouse = false
+    this.scrollLocation = ''
+    this.isScrolling = false
     this.updateBuyingLocation = this.updateBuyingLocation.bind(this)
   }
 
   // componentDidMount() {
 
   // }
+
+  clearScrollLocation() {
+    this.scrollLocation = ''  // reset
+  }
+
+  scrollToLocation(locationTag) {
+    if (!(this.isScrolling) && (this.scrollLocation != locationTag)) {
+      this.isScrolling = true
+      setTimeout(() => {
+        goToAnchor(locationTag) // scroll to the id tag location
+        this.isScrolling = false
+        setTimeout(() => {
+          removeHash()  // remove # indexing in URL
+        }, scrollTiming)
+      }, 500)
+      
+      this.scrollLocation = locationTag
+    }
+  }
 
   showResidentQuestion() {
     return (
@@ -61,7 +84,7 @@ export default class App extends React.Component {
           questionNum="1" stateValue={this.state.isResident} callback={
             (answer) => {
               this.setState({ isResident: answer })
-              goToAnchor('Q-1')
+              this.scrollToLocation('Q-1')
             }
           }
         />
@@ -79,7 +102,7 @@ export default class App extends React.Component {
           questionNum="2" stateValue={this.state.hasKiwiSaverAcc} callback={
             (answer) => {
               this.setState({ hasKiwiSaverAcc: answer })
-              goToAnchor('Q-2')
+              this.scrollToLocation('Q-2')
             }
           }
         />
@@ -98,7 +121,7 @@ export default class App extends React.Component {
           questionNum="3" stateValue={this.state.ownedHouse} callback={
             (answer) => {
               this.setState({ ownedHouse: answer })
-              goToAnchor('Q-3')
+              this.scrollToLocation('Q-3')
             }
           }
         />
@@ -119,7 +142,7 @@ export default class App extends React.Component {
           callback={
             (answer) => {
               this.setState({ intendToLive: answer })
-              goToAnchor('Q-4')
+              this.scrollToLocation('Q-4')
             }
           }
         />
@@ -140,7 +163,7 @@ export default class App extends React.Component {
           callback={
             (answer) => {
               this.setState({ hasKiwiSaverThreeYears: answer })
-              goToAnchor('Q-5')
+              this.scrollToLocation('Q-5')
             }
           }
         />
@@ -173,7 +196,7 @@ export default class App extends React.Component {
                 isMoreThanThreeYears = true
               }
               this.setState({ contributeThreeYears: isMoreThanThreeYears })
-              goToAnchor('Q-6')
+              this.scrollToLocation('Q-6')
             }
           }
         />
@@ -197,7 +220,7 @@ export default class App extends React.Component {
           callback={
             (answer) => {
               this.setState({ hasReceivedGrant: answer })
-              goToAnchor('Q-7')
+              this.scrollToLocation('Q-7')
             }
           }
         />
@@ -254,7 +277,7 @@ export default class App extends React.Component {
       this.state.housePriceLimit = 400000
     }
     this.setState({ buyingLocation: answer })
-    goToAnchor('Q-8')
+    this.scrollToLocation('Q-8')
   }
 
   showHousePriceQuestion() {
@@ -284,7 +307,7 @@ export default class App extends React.Component {
                 isOverLimit = true
               }
               this.setState({ isPriceOverLimit: isOverLimit })
-              goToAnchor('Q-9')
+              this.scrollToLocation('Q-9')
             }
           }
         />
@@ -311,7 +334,7 @@ export default class App extends React.Component {
           (answer) => {
             this.setState({ isNewHouse: answer })
             this.repliedIsNewHouse = true;
-            goToAnchor('Q-10')
+            this.scrollToLocation('Q-10')
           }
         }
       />
@@ -336,7 +359,7 @@ export default class App extends React.Component {
         callback={
           (answer) => {
             this.setState({ isBuyingAsIndividual: answer })
-            goToAnchor('Q-11')
+            this.scrollToLocation('Q-11')
           }
         }
       />
@@ -363,7 +386,7 @@ export default class App extends React.Component {
           callback={
             (answer) => {
               this.setState({ isIncomeBelowSingleLimit: answer })
-              goToAnchor('Q-12.1')
+              this.scrollToLocation('Q-12.1')
             }
           }
         />
@@ -392,7 +415,7 @@ export default class App extends React.Component {
           callback={
             (answer) => {
               this.setState({ isIncomeBelowCombinedLimit: answer })
-              goToAnchor('Q-12.2')
+              this.scrollToLocation('Q-12.2')
             }
           }
         />
@@ -427,7 +450,7 @@ export default class App extends React.Component {
         callback={
           () => {
             this.setState({ hasEnteredSingleSaving: true })
-            goToAnchor('Q-13.1')
+            this.scrollToLocation('Q-13.1')
           }
         }
       />
@@ -461,7 +484,7 @@ export default class App extends React.Component {
         callback={
           () => {
             this.setState({ hasEnteredSingleKiwiSaverAmount: true })
-            goToAnchor('conclusion')
+            this.scrollToLocation('conclusion')
           }
         }
       />
@@ -494,7 +517,7 @@ export default class App extends React.Component {
         callback={
           () => {
             this.setState({ hasEnteredDoubleSaving: true })
-            goToAnchor('Q-13.2')
+            this.scrollToLocation('Q-13.2')
           }
         }
       />
@@ -528,7 +551,7 @@ export default class App extends React.Component {
         callback={
           () => {
             this.setState({ hasEnteredDoubleKiwiSaverAmount: true })
-            goToAnchor('conclusion')
+            this.scrollToLocation('conclusion')
           }
         }
       />
@@ -636,6 +659,8 @@ export default class App extends React.Component {
 
   msgNeedResident() {
     if (this.state.isResident === false) {
+      this.clearScrollLocation()
+
       return (
         <IneligibleMessage message="You need to be a NZ Resident to be eligible" />
       )
@@ -646,6 +671,8 @@ export default class App extends React.Component {
     if (!this.state.isResident) return
 
     if (this.state.hasKiwiSaverAcc === false) {
+      this.clearScrollLocation()
+
       return (
         <IneligibleMessage message="You need to have a KiwiSaver Account to be eligible" />
       )
@@ -658,6 +685,8 @@ export default class App extends React.Component {
     }
 
     if (this.state.ownedHouse === true) {
+      this.clearScrollLocation()
+
       return (
         <IneligibleMessage message="You must not have owned a house before to be eligible" />
       )
@@ -671,6 +700,8 @@ export default class App extends React.Component {
     }
 
     if (this.state.intendToLive === false) {
+      this.clearScrollLocation()
+
       return (
         <IneligibleMessage message="You must be intended to live at the house. May eligible for exemption" />
       )
@@ -685,6 +716,8 @@ export default class App extends React.Component {
     }
 
     if (this.state.hasKiwiSaverThreeYears === false) {
+      this.clearScrollLocation()
+
       return (
         <IneligibleMessage message="You need to own a KiwiSaver Account for more than 3 years to be eligible" />
       )
@@ -699,6 +732,8 @@ export default class App extends React.Component {
     }
 
     if (this.state.contributeThreeYears === false) {
+      this.clearScrollLocation()
+
       return (
         <IneligibleMessage message="You are not eligible for HomeStart Grant. But you are still eligible for KiwiSaver withdrawal. Please contact your KiwiSaver provider today." isWarning={true} />
       )
@@ -714,6 +749,8 @@ export default class App extends React.Component {
     }
 
     if (this.state.hasReceivedGrant === true) {
+      this.clearScrollLocation()
+
       return (
         <IneligibleMessage message="You are no longer eligible for HomeStart Grant and KiwiSaver withdrawal." />
       )
@@ -729,6 +766,8 @@ export default class App extends React.Component {
     }
 
     if (this.state.isPriceOverLimit === true) {
+      this.clearScrollLocation()
+
       return (
         <IneligibleMessage message="The house you want to buy is not within the purchase price threshold to be eligible for the HomeStart Grant" />
       )
@@ -744,6 +783,8 @@ export default class App extends React.Component {
     }
 
     if (this.state.isIncomeBelowSingleLimit === false) {
+      this.clearScrollLocation()
+
       return (
         <IneligibleMessage message="Your income is over the threshold" />
       )
@@ -759,6 +800,8 @@ export default class App extends React.Component {
     }
 
     if (this.state.isIncomeBelowCombinedLimit === false) {
+      this.clearScrollLocation()
+
       return (
         <IneligibleMessage message="Your combined household income is over the threshold for more than one buyer" />
       )
