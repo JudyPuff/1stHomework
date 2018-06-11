@@ -9,15 +9,17 @@ export default function QuestionValue(props) {
 
   return (
     <ScrollableAnchor id={anchorIdentifier}>
-      <div className="container mt-4">
-        <h4>{props.questionNum}. {props.question}</h4>
-        <span className="ml-4">{props.preLabel}</span>
-        <input type="number" min={0} defaultValue={0} name="questionIdentifier" onChange={(e) => {
-          props.callbackUpdate(e.target.value)
-        }} />
-        <span className="ml-2">{props.postLabel}</span>
-        <button className="ml-5" onClick={props.callback}>Next</button>
-      </div>
+      <form className="container mt-4 ml-4 mr-4">
+        <fieldset>
+          <legend>{props.questionNum}. {props.question}</legend>
+          <span className="ml-4">{props.preLabel}</span>
+          <input type="number" min={0} defaultValue={0} name="questionIdentifier" onChange={(e) => {
+            props.callbackUpdate(e.target.value)
+          }} />
+          <span className="ml-2">{props.postLabel}</span>
+          <button type="button" className="ml-5" onClick={props.callback}>Next</button>
+        </fieldset>
+      </form>
     </ScrollableAnchor>
   )
 }

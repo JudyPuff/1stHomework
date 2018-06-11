@@ -8,16 +8,16 @@ export default function QuestionYesNo(props) {
 
   return (
     <ScrollableAnchor id={anchorIdentifier}>
-      <form className="container mt-4">
-
-        <h4>{props.questionNum}. {props.question}</h4>
+      <form className="container mt-4 ml-4 mr-4">
+        <fieldset>
+        <legend>{props.questionNum}. {props.question}</legend>
         <RadioChoice identifier={questionIdentifier} radioValue={true}
           radioValueStr="true" stateValue={props.stateValue}
           callback={props.callback} label="Yes" />
         <RadioChoice identifier={questionIdentifier} radioValue={false}
           radioValueStr="false" stateValue={props.stateValue}
           callback={props.callback} label="No" />
-
+        </fieldset>
       </form>
     </ScrollableAnchor>
   )

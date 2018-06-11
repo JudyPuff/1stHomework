@@ -247,8 +247,9 @@ export default class App extends React.Component {
 
     return (
       <ScrollableAnchor id='Q-8'>
-        <form className="container mt-4">
-          <h4>{questionNum}. Where do you intend to buy your house</h4>
+        <form className="container mt-4 ml-4 mr-4">
+          <fieldset>
+          <legend>{questionNum}. Where do you intend to buy your house</legend>
           <RadioChoice identifier={questionIdentifier} radioValue={1}
             radioValueStr="1" stateValue={stateValue}
             label={location1}
@@ -264,6 +265,7 @@ export default class App extends React.Component {
             label={location3}
             callback={this.updateBuyingLocation}
           />
+          </fieldset>
         </form>
       </ScrollableAnchor>
     )
