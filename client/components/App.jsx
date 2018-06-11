@@ -594,7 +594,7 @@ export default class App extends React.Component {
 
     return (
       <ScrollableAnchor id='conclusion'>
-        <div className="container mt-5 p-2 rounded bg-primary text-light">
+        <div className="conclude-frame container mt-5 p-2 rounded">
           <div className="text-center mb-2">SINGLE Purchase</div>
           <div>House Price: {formatNumberOnMoney(this.state.housePrice)}</div>
           <div className="pl-4">10% of House price: {formatNumberOnMoney(this.state.housePrice * 0.1)}</div>
@@ -607,6 +607,7 @@ export default class App extends React.Component {
           <p />
           {this.showEligibleHomeStartGrantMessage(this.state.housePrice, totalSaving)}
           {this.showEligibleBankLoanMessage(this.state.housePrice, totalSaving)}
+          <div className="conclude-img"/>
         </div>
       </ScrollableAnchor>
     )
@@ -624,7 +625,7 @@ export default class App extends React.Component {
 
     return (
       <ScrollableAnchor id='conclusion'>
-        <div className="container mt-5 p-2 rounded bg-primary text-light">
+        <div className="conclude-frame container mt-5 p-2 rounded">
           <div className="text-center mb-2">COMBINED Purchase</div>
           <div>House Price: {formatNumberOnMoney(this.state.housePrice)}</div>
           <div className="pl-4">10% of House price: {formatNumberOnMoney(this.state.housePrice * 0.1)}</div>
@@ -637,7 +638,7 @@ export default class App extends React.Component {
           <p />
           {this.showEligibleHomeStartGrantMessage(this.state.housePrice, totalSaving)}
           {this.showEligibleBankLoanMessage(this.state.housePrice, totalSaving)}
-
+          <div className="conclude-img"/>
         </div>
       </ScrollableAnchor>
     )
