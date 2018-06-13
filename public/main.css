@@ -1,8 +1,18 @@
-.widget-details .visible {
-  display: block;
+.conclude-frame {
+  position: relative;
 }
 
-.widget-details .hidden {
-  display: none;
+.conclude-img {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: url("../images/bungalow-house.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  opacity: 0.1;
 }
-
