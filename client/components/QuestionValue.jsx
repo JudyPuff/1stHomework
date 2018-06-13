@@ -9,7 +9,7 @@ export default function QuestionValue(props) {
 
   return (
     <ScrollableAnchor id={anchorIdentifier}>
-      <form className="container mt-4 ml-4 mr-4">
+      <div className="container mt-4 ml-4 mr-4">
         <fieldset>
           <legend>{props.questionNum}. {props.question}</legend>
           <span className="ml-4">{props.preLabel}</span>
@@ -19,7 +19,7 @@ export default function QuestionValue(props) {
           <span className="ml-2">{props.postLabel}</span>
           <button type="button" className="ml-5" onClick={props.callback}>Next</button>
         </fieldset>
-      </form>
+      </div>
     </ScrollableAnchor>
   )
 }
