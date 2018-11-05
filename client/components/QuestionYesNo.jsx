@@ -8,7 +8,7 @@ export default function QuestionYesNo(props) {
 
   return (
     <ScrollableAnchor id={anchorIdentifier}>
-      <div className="container mt-4 ml-4 mr-4">
+      <div className="mt-4 mr-4">
         <fieldset>
         <legend>{props.questionNum}. {props.question}</legend>
         <RadioChoice identifier={questionIdentifier} radioValue={true}
