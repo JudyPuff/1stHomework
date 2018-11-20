@@ -9,7 +9,7 @@ export default function QuestionValue(props) {
 
   return (
     <ScrollableAnchor id={anchorIdentifier}>
-      <div className="container mt-4 ml-4 mr-4">
+      <div className="mt-4 mr-4">
         <fieldset>
           <legend>{props.questionNum}. {props.question}</legend>
           <span className="ml-4">{props.preLabel}</span>

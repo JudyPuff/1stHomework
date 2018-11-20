@@ -247,7 +247,7 @@ export default class App extends React.Component {
 
     return (
       <ScrollableAnchor id='Q-8'>
-        <form className="container mt-4 ml-4 mr-4">
+        <form className="mt-4 mr-4">
           <fieldset>
           <legend>{questionNum}. Where do you intend to buy your house</legend>
           <RadioChoice identifier={questionIdentifier} radioValue={1}
@@ -816,25 +816,26 @@ export default class App extends React.Component {
     return (
       <div className="mb-5">
         <Header />
-
-        {this.showResidentQuestion()}
-        {this.showKiwiSaverAccQuestion()}
-        {this.showOwnedHouseQuestion()}
-        {this.showIntendToLiveQuestion()}
-        {this.showKiwiSaverDurationQuestion()}
-        {this.showKiwiSaverContributeQuestion()}
-        {this.showReceivedGrantQuestion()}
-        {this.showHouseLocationQuestion()}
-        {this.showHousePriceQuestion()}
-        {this.showNewHouseQuestion()}
-        {this.showWhoBuyingQuestion()}
-        {this.showSingleIncomeQuestion()}
-        {this.showCombinedIncomeQuestion()}
-        {this.showSingleSavingQuestion()}
-        {this.showCombinedSavingQuestion()}
-        {this.showSingleKiwiSaverAmountQuestion()}
-        {this.showDoubleKiwiSaverAmountQuestion()}
-        {this.showConclusion()}
+        <div className="container">
+          {this.showResidentQuestion()}
+          {this.showKiwiSaverAccQuestion()}
+          {this.showOwnedHouseQuestion()}
+          {this.showIntendToLiveQuestion()}
+          {this.showKiwiSaverDurationQuestion()}
+          {this.showKiwiSaverContributeQuestion()}
+          {this.showReceivedGrantQuestion()}
+          {this.showHouseLocationQuestion()}
+          {this.showHousePriceQuestion()}
+          {this.showNewHouseQuestion()}
+          {this.showWhoBuyingQuestion()}
+          {this.showSingleIncomeQuestion()}
+          {this.showCombinedIncomeQuestion()}
+          {this.showSingleSavingQuestion()}
+          {this.showCombinedSavingQuestion()}
+          {this.showSingleKiwiSaverAmountQuestion()}
+          {this.showDoubleKiwiSaverAmountQuestion()}
+          {this.showConclusion()}
+        </div>
       </div>
     )
   }
